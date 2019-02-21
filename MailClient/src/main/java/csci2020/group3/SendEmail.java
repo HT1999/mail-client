@@ -1,22 +1,20 @@
 package csci2020.group3;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.InternetAddress;
 import javax.mail.Transport;
 
 public class SendEmail {
 
     public static void sendMail(String from, String to, String pwd, String subject, String email_txt) {
 
-        //Setting up configurations for the email connection to the Google SMTP server using TLS
+        // Setting up properties using Google's smtp server
         Properties props = new Properties();
         props.put("mail.smtp.host", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -24,7 +22,7 @@ public class SendEmail {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
 
-        //Establishing a session with required user details
+        // Authenticating details
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(from, pwd);
@@ -47,10 +45,10 @@ public class SendEmail {
             Transport.send(msg);
 
             // Success console log
-            System.out.println("Mail has been sent successfully");
+            System.out.println("Mail sent successfully");
         } catch (MessagingException mex) {
             // Failure to send and why
-            System.out.println("Unable to send an email" + mex);
+            System.out.println("Exception sending email: " + mex);
         }
     }
 }

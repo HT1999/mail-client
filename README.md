@@ -1,1 +1,5 @@
-# CSCI2020U_Project
+# Mail Client
+
+## CSCI2020U Project
+
+## Group 3

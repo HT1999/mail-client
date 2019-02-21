@@ -11,8 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 
 
 public class Controller {
@@ -92,4 +95,10 @@ public class Controller {
         new_email.show();
 
     }
+
+    public void loadButtonClicked() {
+        System.out.println("User pressed load button");
+        StoreEmails.ReadSentMail(System.getenv("EMAIL2_USER"), System.getenv("EMAIL2_PASS"));
+    }
+
 }

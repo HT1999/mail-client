@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -23,6 +25,7 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
+                                <MenuItem mnemonicParsing="false" text="Sign In" onAction="#signIn"/>
                                 <MenuItem mnemonicParsing="false" text="Close" />
                             </items>
                         </Menu>
@@ -40,7 +43,28 @@
                 </MenuBar>
                 <HBox spacing="10.0">
                     <children>
-                  <Region prefHeight="25.0" prefWidth="168.0" />
+                  <Button mnemonicParsing="false" onAction="#loadButtonClicked">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@refresh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                        <Button mnemonicParsing="false" onAction="#newButtonClicked" prefHeight="20.0" prefWidth="25.0">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@envelope.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                        </Button>
+                  <Region prefHeight="28.0" prefWidth="78.0" />
                         <TextField prefHeight="25.0" prefWidth="215.0">
                      <HBox.margin>
                         <Insets />
@@ -50,12 +74,6 @@
                         <Button mnemonicParsing="false" text="Reply" />
                         <Button mnemonicParsing="false" text="Forward" />
                         <Button mnemonicParsing="false" text="Delete" />
-                  <Region prefHeight="25.0" prefWidth="42.0" />
-                        <Button mnemonicParsing="false" onAction="#newButtonClicked" prefHeight="25.0" prefWidth="45.0" text="New">
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Button>
                     </children>
                     <VBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

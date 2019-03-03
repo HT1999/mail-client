@@ -9,6 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -17,14 +22,18 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import javax.mail.*;
-import javax.naming.AuthenticationException;
-import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.util.Properties;
+import java.util.jar.JarFile;
 
 
 public class Controller {
 
     Preferences preferences = Preferences.getPreferences();
+    public static String attach_path;
+    public static TextField attach_field = new TextField();
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -78,6 +87,30 @@ public class Controller {
         GridPane.setConstraints(msg, 1, 3);
         pane.getChildren().addAll(msg_lbl, msg);
 
+        // Attach File
+        attach_field.setBackground(Background.EMPTY);
+        attach_field.setText("");
+
+        Button attach_btn = new Button("Attach");
+        attach_btn.setOnAction(e -> {
+            // opens file finder
+            JFileChooser finder = new JFileChooser();
+            finder.showOpenDialog(null);
+            File f = finder.getSelectedFile();
+
+            // outputting names to textfield
+            attach_path = f.getAbsolutePath();
+            attach_field.setText(f.getName());
+
+        });
+
+        GridPane.setConstraints(attach_btn, 0, 4);
+        GridPane.setConstraints(attach_field, 1, 4);
+        pane.getChildren().addAll(attach_btn, attach_field);
+
+
+
+
         // Send Button
         Button send_btn = new Button("Send");
         send_btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -88,7 +121,7 @@ public class Controller {
             }
         });
 
-        GridPane.setConstraints(send_btn, 1, 4);
+        GridPane.setConstraints(send_btn, 1, 5);
         GridPane.setHalignment(send_btn, HPos.RIGHT);
         pane.getChildren().add(send_btn);
 
@@ -100,6 +133,7 @@ public class Controller {
 
     }
 
+    // Reads emails
     public void loadButtonClicked() {
         System.out.println("User pressed load button");
         StoreEmails.ReadSentMail(preferences.getEmail(), preferences.getPassword());
@@ -143,7 +177,7 @@ public class Controller {
         // Collecting User email password
         Label pwd_lbl = new Label("Password");
         final PasswordField pwd = new PasswordField();
-        pwd.setPromptText("Recipients");
+        pwd.setPromptText("Password");
         pwd.getText();
         pwd.setAlignment(Pos.CENTER_LEFT);
         GridPane.setConstraints(pwd_lbl, 0, 1);
@@ -154,6 +188,8 @@ public class Controller {
         Button login_btn = new Button("Login");
         login_btn.setPrefHeight(35);
         login_btn.setPrefWidth(100);
+        login_btn.setDefaultButton(true);
+
         login_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -192,6 +228,11 @@ public class Controller {
 
                     // Invalid login attempt
                 } catch (MessagingException e) {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    //errorAlert.setHeaderText("Invalid Login");
+                    errorAlert.setContentText("Invalid email/password entered.");
+                    errorAlert.showAndWait();
+
                     e.printStackTrace();
                 }
 

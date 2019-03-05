@@ -13,8 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -88,10 +90,13 @@ public class Controller {
         pane.getChildren().addAll(msg_lbl, msg);
 
         // Attach File
+        HBox attach_hbox = new HBox();
+
         attach_field.setBackground(Background.EMPTY);
         attach_field.setText("");
 
-        Button attach_btn = new Button("Attach");
+        Button attach_btn = new Button();
+        attach_btn.setGraphic(new ImageView("csci2020/group3/link.png"));
         attach_btn.setOnAction(e -> {
             // opens file finder
             JFileChooser finder = new JFileChooser();
@@ -104,15 +109,19 @@ public class Controller {
 
         });
 
-        GridPane.setConstraints(attach_btn, 0, 4);
-        GridPane.setConstraints(attach_field, 1, 4);
-        pane.getChildren().addAll(attach_btn, attach_field);
+        attach_hbox.getChildren().addAll(attach_btn, attach_field);
+
+        GridPane.setHalignment(attach_hbox, HPos.LEFT);
+        GridPane.setConstraints(attach_hbox, 1, 4);
+        //GridPane.setConstraints(attach_field, 1, 4);
+        pane.getChildren().addAll(attach_hbox);
 
 
 
 
         // Send Button
         Button send_btn = new Button("Send");
+        send_btn.setDefaultButton(true);
         send_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -139,7 +148,7 @@ public class Controller {
         StoreEmails.ReadSentMail(preferences.getEmail(), preferences.getPassword());
     }
 
-    // Creates the signIn window on button click
+    // Creates the signIn window on button click and handles sign in (** should clean up **)
     public void signIn() throws Exception{
 
         // FXML Setup
@@ -217,14 +226,17 @@ public class Controller {
                 try {
                     emailSession.getTransport().connect();
 
-                    // If authentication passes store email and password
-                    System.out.println("Successful user sign in!");
-
                     // Updates config file
                     Preferences preferences = Preferences.getPreferences();
                     preferences.setEmail(email.getText());
                     preferences.setPassword(pwd.getText());
                     preferences.initConfig();
+
+                    System.out.println("Successful user sign in!");
+
+                    // Successful login popup
+                    JOptionPane.showMessageDialog(null, "Successful login");
+
 
                     // Invalid login attempt
                 } catch (MessagingException e) {

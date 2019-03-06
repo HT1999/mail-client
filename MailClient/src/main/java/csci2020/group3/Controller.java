@@ -1,8 +1,15 @@
 package csci2020.group3;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonStreamParser;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,15 +34,27 @@ import javax.mail.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileReader;
+import java.net.URL;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.jar.JarFile;
 
 
-public class Controller {
+public class Controller implements Initializable{
+
+    ObservableList<String> list = FXCollections.observableArrayList();
+
+    // Create 3 more ObservableList's for subject, date, from, and 1 for id to
+    // facilitate interaction when list item is selected.
+
+    @FXML
+    private ListView<String> emailList;
 
     Preferences preferences = Preferences.getPreferences();
     public static String attach_path;
     public static TextField attach_field = new TextField();
+
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -263,6 +282,37 @@ public class Controller {
         login_menu.setScene(sendEmailScene);
         login_menu.show();
 
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            loadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadData() throws Exception{
+
+        // Opens JSON file and displays key Email information inside a ListView
+        File file = new File("/MailClient/Data/emails.json");
+        JsonStreamParser parser = new JsonStreamParser(new FileReader(file));
+
+        Gson gson = new GsonBuilder().create();
+
+        // Extracting classes from json file in a list.
+        Email[] email_list = gson.fromJson(parser.next(), Email[].class);
+
+        for (int i = email_list.length-1; i >= 0; i--) {
+            list.add(email_list[i].getSubject());
+        }
+
+        emailList.getItems().addAll(list);
+        emailList.setOnMouseClicked(e -> {
+           System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
+        });
 
     }
 

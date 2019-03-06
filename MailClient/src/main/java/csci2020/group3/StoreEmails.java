@@ -101,10 +101,10 @@ public class StoreEmails {
         writeFile.close();
 
         // Creating json data file with all emails
-        File jsonFile = new File("/MailClient/Data/Emails.json");
+        File jsonFile = new File("/MailClient/Data/emails.json");
         jsonFile.getParentFile().mkdirs();
         try (Writer jsonOutput = new FileWriter(jsonFile)) {
-            Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(emails, jsonOutput);
         }
     }
@@ -189,7 +189,8 @@ public class StoreEmails {
 
                 // Creating text file to store current text content
                 try {
-                    File curr_file = new File("/MailClient/Data/email-" + count + ".txt");
+                    // Saving text as html for now*****
+                    File curr_file = new File("/MailClient/Data/email-" + count + ".html");
                     curr_file.getParentFile().mkdirs();
                     writeFileCurrent = new FileWriter(curr_file);
                     email.setContentPath("/MailClient/Data/email-" + count + ".txt");

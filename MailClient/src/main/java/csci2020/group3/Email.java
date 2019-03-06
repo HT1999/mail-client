@@ -78,7 +78,6 @@ public class Email {
     public void initConfig() {
         Gson gson = new Gson();
         try {
-            // Currently is creating a new file each iteration *****!*!*!*!
             Writer writer = new FileWriter(EMAIL_FILE + EMAIL_EXTENSION);
             gson.toJson(this, writer);
             writer.close();

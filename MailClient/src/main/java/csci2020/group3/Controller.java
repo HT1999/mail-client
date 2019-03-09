@@ -35,6 +35,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -117,26 +118,36 @@ public class Controller implements Initializable{
         Button attach_btn = new Button();
         attach_btn.setGraphic(new ImageView("csci2020/group3/link.png"));
         attach_btn.setOnAction(e -> {
-            // opens file finder
-            JFileChooser finder = new JFileChooser();
-            finder.showOpenDialog(null);
-            File f = finder.getSelectedFile();
 
-            // outputting names to textfield
-            attach_path = f.getAbsolutePath();
-            attach_field.setText(f.getName());
+            // MacOS is picky with Swing, had to use
+            try {
+                EventQueue.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Uses JFileChooser interface for user to select the attachment file.
+                        JFileChooser finder = new JFileChooser();
+                        finder.showOpenDialog(null);
+                        File f = finder.getSelectedFile();
 
+                        // Outputs file names to textfield
+                        attach_path = f.getAbsolutePath();
+                        attach_field.setText(f.getName());
+                    }
+                });
+            } catch (InterruptedException e1) {
+                // User closes email attachment window.
+                //e1.printStackTrace();
+            } catch (InvocationTargetException e1) {
+                // Redundant exception, needed for invokeAndWait.
+                //e1.printStackTrace();
+            }
         });
 
         attach_hbox.getChildren().addAll(attach_btn, attach_field);
 
         GridPane.setHalignment(attach_hbox, HPos.LEFT);
         GridPane.setConstraints(attach_hbox, 1, 4);
-        //GridPane.setConstraints(attach_field, 1, 4);
         pane.getChildren().addAll(attach_hbox);
-
-
-
 
         // Send Button
         Button send_btn = new Button("Send");
@@ -254,17 +265,15 @@ public class Controller implements Initializable{
                     System.out.println("Successful user sign in!");
 
                     // Successful login popup
-                    JOptionPane.showMessageDialog(null, "Successful login");
-
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful Sign-In", ButtonType.OK);
+                    alert.showAndWait();
 
                     // Invalid login attempt
                 } catch (MessagingException e) {
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    //errorAlert.setHeaderText("Invalid Login");
-                    errorAlert.setContentText("Invalid email/password entered.");
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Invalid email/password entered.");
+                    System.out.println("Invalid user login attempt!");
                     errorAlert.showAndWait();
-
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
 
                 // Close login window

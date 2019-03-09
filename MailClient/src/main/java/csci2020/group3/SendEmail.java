@@ -1,5 +1,8 @@
 package csci2020.group3;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.io.File;
 import java.util.Date;
 import java.util.Properties;
@@ -11,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
 import javax.sql.DataSource;
-import javax.swing.*;
+//import javax.swing.*;
 
 import static csci2020.group3.Controller.attach_field;
 import static csci2020.group3.Controller.attach_path;
@@ -66,7 +69,10 @@ public class SendEmail {
             msg.setContent(multipart);
 
             Transport.send(msg);
-            JOptionPane.showMessageDialog(null, "message sent");
+
+            // Successfully Sent Email
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Email Sent", ButtonType.OK);
+            alert.showAndWait();
 
             // updating attach_field after email sent
             //attach_field.setText("");
@@ -75,8 +81,9 @@ public class SendEmail {
             System.out.println("Mail sent successfully");
         } catch (MessagingException mex) {
             // Failure to send and why
-            JOptionPane.showMessageDialog(null, "Failure sending email: " + mex);
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Failure sending email: " + mex);
             System.out.println("Exception sending email: " + mex);
+            errorAlert.showAndWait();
         }
     }
 

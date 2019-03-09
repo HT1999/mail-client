@@ -8,12 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -24,11 +22,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.util.Callback;
 
 import javax.mail.*;
 import javax.swing.*;
@@ -39,18 +35,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.jar.JarFile;
 
 
 public class Controller implements Initializable{
 
     ObservableList<String> list = FXCollections.observableArrayList();
 
+    //ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
+    //ListView<EmailListView.EmailList> listView = new ListView<EmailListView.EmailList>(data);
+
+
     // Create 3 more ObservableList's for subject, date, from, and 1 for id to
     // facilitate interaction when list item is selected.
 
     @FXML
-    private ListView<String> emailList;
+    //private ListView<String> emailList;
+    private ListView<EmailListView.EmailList> emailList;
+
 
     Preferences preferences = Preferences.getPreferences();
     public static String attach_path;
@@ -176,6 +177,13 @@ public class Controller implements Initializable{
     public void loadButtonClicked() {
         System.out.println("User pressed load button");
         StoreEmails.ReadSentMail(preferences.getEmail(), preferences.getPassword());
+
+        // After reading data, load to list view
+        try {
+            loadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Creates the signIn window on button click and handles sign in (** should clean up **)
@@ -306,22 +314,42 @@ public class Controller implements Initializable{
     private void loadData() throws Exception{
 
         // Opens JSON file and displays key Email information inside a ListView
-        File file = new File("/MailClient/Data/emails.json");
-        JsonStreamParser parser = new JsonStreamParser(new FileReader(file));
+        try {
+            File file = new File("/MailClient/Data/emails.json");
+            JsonStreamParser parser = new JsonStreamParser(new FileReader(file));
 
-        Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().create();
 
-        // Extracting classes from json file in a list.
-        Email[] email_list = gson.fromJson(parser.next(), Email[].class);
+            // Extracting classes from json file in a list.
+            Email[] email_list = gson.fromJson(parser.next(), Email[].class);
 
-        for (int i = email_list.length-1; i >= 0; i--) {
-            list.add(email_list[i].getSubject());
+            // Creating data variable to store custom email list class elements
+            ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
+
+            // Listing all emails headlines in a list view (sender, subject, date)
+            for (int i = email_list.length - 1; i >= 0; i--) {
+                data.add(new EmailListView.EmailList(email_list[i].getFrom(), email_list[i].getSubject(), email_list[i].getDate()));
+            }
+
+            emailList.getItems().addAll(data);
+
+            emailList.setCellFactory(new Callback<ListView<EmailListView.EmailList>, ListCell<EmailListView.EmailList>>() {
+                @Override
+                public ListCell<EmailListView.EmailList> call(ListView<EmailListView.EmailList> listView) {
+                    return new EmailListView.EmailListCell();
+                }
+            });
+
+            emailList.setOnMouseClicked(e -> {
+                System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
+            });
         }
+        catch(Exception e) {
+            // emails.json file not created...
+            // data needs to be loaded in
+            System.out.println("Initial JSON file not created.\nData needs to be loaded in!");
 
-        emailList.getItems().addAll(list);
-        emailList.setOnMouseClicked(e -> {
-           System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
-        });
+        }
 
     }
 

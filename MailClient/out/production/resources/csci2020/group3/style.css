@@ -1,0 +1,6 @@
+.list-view .list-cell:even {
+    -fx-padding: 20 10 20 10;
+}
+.list-view .list-cell:odd {
+    -fx-padding: 20 10 20 10;
+}

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="csci2020.group3.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="csci2020.group3.Controller">
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
@@ -43,34 +43,35 @@
                 </MenuBar>
                 <HBox spacing="10.0">
                     <children>
-                  <Button mnemonicParsing="false" onAction="#loadButtonClicked">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@refresh.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                        <Button mnemonicParsing="false" onAction="#loadButtonClicked">
+                            <graphic>
+                                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@refresh.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
                         <Button mnemonicParsing="false" onAction="#newButtonClicked" prefHeight="20.0" prefWidth="25.0">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@envelope.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                            <graphic>
+                                <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@envelope.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
                         </Button>
-                  <Region prefHeight="28.0" prefWidth="78.0" />
+                        <Region prefHeight="28.0" prefWidth="78.0" />
                         <TextField prefHeight="25.0" prefWidth="215.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></TextField>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </TextField>
                         <Button mnemonicParsing="false" text="Search" />
-                  <Region prefHeight="25.0" prefWidth="114.0" />
+                        <Region prefHeight="25.0" prefWidth="114.0" />
                         <Button mnemonicParsing="false" text="Reply" />
                         <Button mnemonicParsing="false" text="Forward" />
                         <Button mnemonicParsing="false" text="Delete" />
@@ -82,9 +83,6 @@
             </children>
         </VBox>
     </top>
-    <left>
-        <TreeView prefHeight="517.0" prefWidth="178.0" BorderPane.alignment="CENTER" />
-    </left>
     <bottom>
         <HBox BorderPane.alignment="CENTER">
             <children>
@@ -93,9 +91,12 @@
         </HBox>
     </bottom>
     <center>
-        <ListView id="emailList" fx:id="emailList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TreeView maxWidth="178.0" prefHeight="517.0" prefWidth="178.0" />
+                <ListView id="emailList" fx:id="emailList" maxWidth="286.0" minWidth="286.0" prefWidth="286.0" />
+                <WebView id="wb" fx:id="wb" minHeight="-1.0" minWidth="430.0" prefHeight="-1.0" prefWidth="430.0" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
     </center>
-   <right>
-      <WebView prefHeight="517.0" prefWidth="436.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

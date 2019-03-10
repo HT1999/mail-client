@@ -19,7 +19,7 @@ public class StoreEmails {
 
     static {
         try {
-            File file = new File("/MailClient/Data/emails.txt");
+            File file = new File("src/data/emails.txt");
             file.getParentFile().mkdirs();
             writeFile = new FileWriter(file);
         } catch (IOException e) {
@@ -98,7 +98,7 @@ public class StoreEmails {
         writeFile.close();
 
         // Creating json data file with all emails
-        File jsonFile = new File("/MailClient/Data/emails.json");
+        File jsonFile = new File("src/data/emails.json");
         jsonFile.getParentFile().mkdirs();
         try (Writer jsonOutput = new FileWriter(jsonFile)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -157,10 +157,10 @@ public class StoreEmails {
 
                 // Creating text file to store current text content
                 try {
-                    File curr_file = new File("/MailClient/Data/email-" + count + ".html");
+                    File curr_file = new File("src/data/email-" + count + ".html");
                     curr_file.getParentFile().mkdirs();
                     writeFileCurrent = new FileWriter(curr_file);
-                    email.setContentPath("/MailClient/Data/email-" + count + ".txt");
+                    email.setContentPath("src/data/email-" + count + ".html");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -184,10 +184,10 @@ public class StoreEmails {
 
         // Creating html file to store current html content
         try {
-            File curr_file = new File("/MailClient/Data/email-" + count + ".html");
+            File curr_file = new File("src/data/email-" + count + ".html");
             curr_file.getParentFile().mkdirs();
             writeFileCurrent = new FileWriter(curr_file);
-            email.setContentPath("/MailClient/Data/email-" + count + ".html");
+            email.setContentPath("src/data/email-" + count + ".html");
         } catch (IOException e) {
             e.printStackTrace();
         }

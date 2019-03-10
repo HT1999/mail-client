@@ -22,16 +22,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.apache.commons.io.FileUtils;
 
 import javax.mail.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -49,8 +53,10 @@ public class Controller implements Initializable{
     // facilitate interaction when list item is selected.
 
     @FXML
-    //private ListView<String> emailList;
     private ListView<EmailListView.EmailList> emailList;
+
+    @FXML
+    private WebView wb = new WebView();
 
 
     Preferences preferences = Preferences.getPreferences();
@@ -281,7 +287,7 @@ public class Controller implements Initializable{
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Invalid email/password entered.");
                     System.out.println("Invalid user login attempt!");
                     errorAlert.showAndWait();
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
 
                 // Close login window
@@ -315,7 +321,7 @@ public class Controller implements Initializable{
 
         // Opens JSON file and displays key Email information inside a ListView
         try {
-            File file = new File("/MailClient/Data/emails.json");
+            File file = new File("src/data/emails.json");
             JsonStreamParser parser = new JsonStreamParser(new FileReader(file));
 
             Gson gson = new GsonBuilder().create();
@@ -328,7 +334,8 @@ public class Controller implements Initializable{
 
             // Listing all emails headlines in a list view (sender, subject, date)
             for (int i = email_list.length - 1; i >= 0; i--) {
-                data.add(new EmailListView.EmailList(email_list[i].getFrom(), email_list[i].getSubject(), email_list[i].getDate()));
+                data.add(new EmailListView.EmailList(email_list[i].getFrom(), email_list[i].getSubject(), email_list[i].getDate(),
+                        email_list[i].getId(), email_list[i].getContentPath()));
             }
 
             emailList.getItems().addAll(data);
@@ -342,6 +349,20 @@ public class Controller implements Initializable{
 
             emailList.setOnMouseClicked(e -> {
                 System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
+
+                // Clean WebView contents
+                wb.getEngine().loadContent("");
+
+                File testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
+                try {
+                    // set WebView to emails content path
+                    String str = FileUtils.readFileToString(testFile);
+                    wb.getEngine().loadContent(str);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
             });
         }
         catch(Exception e) {

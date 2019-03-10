@@ -16,18 +16,24 @@ public class EmailListView {
         private String from;
         private String subject;
         private Date date;
+        private int id;
+        private String path;
 
         public String getName() {
             return this.from;
         }
         public String getSubject() { return this.subject; }
         public Date getDate() { return this.date; }
+        public int getId() { return this.id; }
+        public String getPath() {return this.path; }
 
-        public EmailList(String name, String subject, Date date) {
+        public EmailList(String name, String subject, Date date, int id, String path) {
             super();
             this.from = name;
             this.subject = subject;
             this.date = date;
+            this.id = id;
+            this.path = path;
         }
     }
 

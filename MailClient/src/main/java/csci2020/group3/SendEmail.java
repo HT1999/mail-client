@@ -3,7 +3,6 @@ package csci2020.group3;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -13,11 +12,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
-import javax.sql.DataSource;
 //import javax.swing.*;
 
-import static csci2020.group3.Controller.attach_field;
-import static csci2020.group3.Controller.attach_path;
+import static csci2020.group3.CreateNewEmail.attach_field;
+import static csci2020.group3.CreateNewEmail.attach_path;
 
 public class SendEmail {
 

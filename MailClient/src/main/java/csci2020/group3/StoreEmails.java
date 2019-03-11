@@ -95,7 +95,7 @@ public class StoreEmails {
 
             count--;
         }
-        writeFile.close();
+        //writeFile.close();
 
         // Creating json data file with all emails
         File jsonFile = new File("src/data/emails.json");
@@ -171,7 +171,8 @@ public class StoreEmails {
                 writeFileCurrent.write(tp);
             }
 
-            writeFileCurrent.close();
+            // writes everything in the buffer to disk without having to close
+            writeFileCurrent.flush();
 
             // getContent Exception
         } catch (Exception ex) {

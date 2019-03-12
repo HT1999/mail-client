@@ -18,6 +18,11 @@ public class Preferences {
        this.password = null;
    }
 
+   Preferences(String email, String password) {
+        this.email = email;
+        this.password = password;
+   }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -37,17 +42,21 @@ public class Preferences {
         return this.password;
     }
 
+    // Writes to config file
     public void initConfig() {
         //Preferences preference = new Preferences();
         Gson gson = new Gson();
         try {
             // Writing this preference in json format
-            Writer writer = new FileWriter(CONFIG_FILE);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILE));
+            //Writer writer = new FileWriter(CONFIG_FILE);
             gson.toJson(this, writer);
+            writer.flush();
             writer.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No config.txt");
+           // e.printStackTrace();
         }
     }
 
@@ -59,10 +68,16 @@ public class Preferences {
             FileReader reader = new FileReader(CONFIG_FILE);
             preferences = gson.fromJson(reader, Preferences.class);
 
+            reader.close();
+
         } catch (FileNotFoundException e) {
             // Creates config file if not found
-            //this.initConfig();
+            //initConfig();
+            System.out.println("here is the problem");
             e.printStackTrace();
+        } catch (IOException e) {
+            //System.out.println("No config.txt");
+            //e.printStackTrace();
         }
         return preferences;
     }

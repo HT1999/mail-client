@@ -71,10 +71,11 @@
                             </HBox.margin>
                         </TextField>
                         <Button mnemonicParsing="false" text="Search" />
-                        <Region prefHeight="25.0" prefWidth="114.0" />
+                        <Region prefHeight="28.0" prefWidth="86.0" HBox.hgrow="ALWAYS" />
                         <Button mnemonicParsing="false" text="Reply" />
                         <Button mnemonicParsing="false" text="Forward" />
                         <Button mnemonicParsing="false" text="Delete" />
+                  <Region prefHeight="28.0" prefWidth="86.0" HBox.hgrow="ALWAYS" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class SignIn {
 
@@ -75,7 +76,6 @@ public class SignIn {
             public void handle(ActionEvent event) {
 
                 // Authenticating..
-
                 Properties props = new Properties();
                 props.put("mail.smtp.host", "true");
                 props.put("mail.smtp.starttls.enable", "true");
@@ -98,9 +98,7 @@ public class SignIn {
                     emailSession.getTransport().connect();
 
                     // Updates config file
-                    Preferences preferences = Preferences.getPreferences();
-                    preferences.setEmail(email.getText());
-                    preferences.setPassword(pwd.getText());
+                    Preferences preferences = new Preferences(email.getText(), pwd.getText());
                     preferences.initConfig();
 
                     System.out.println("Successful user sign in!");
@@ -108,6 +106,34 @@ public class SignIn {
                     // Successful login popup
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful Sign-In", ButtonType.OK);
                     alert.showAndWait();
+
+                    // Close login window
+                    login_menu.close();
+
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // *******
+                    // On first sign-in, load users email data (temp fix, config.txt isn't being read
+                    // until the app is closed. reading from the data fields fixes that)
+
+                    StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword());
+
+                    try {
+                        Controller con = new Controller();
+                        con.loadData();
+                        //Controller.loadData();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    //System.out.println(preferences.getEmail() + "\n" + preferences.getPassword());
+//                    if (preferences.getEmail() == null || preferences.getPassword() == null) {
+//                        StoreEmails.storeEmails(email.getText(), pwd.getText());
+//                    }
 
                     // Invalid login attempt
                 } catch (MessagingException e) {
@@ -118,7 +144,7 @@ public class SignIn {
                 }
 
                 // Close login window
-                login_menu.close();
+                //login_menu.close();
             }
         });
 

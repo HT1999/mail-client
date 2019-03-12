@@ -28,8 +28,7 @@ public class StoreEmails {
     }
 
 
-    // ** Currently only handles multipart emails **
-    public static void ReadSentMail(String email_addr, String pwd) {
+    public static void storeEmails(String email_addr, String pwd) {
 
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", "imaps");
@@ -44,21 +43,29 @@ public class StoreEmails {
             sent = store.getFolder("INBOX");
             System.out.println("Total # of emails: " + sent.getMessageCount());
 
+            System.out.println("Total # of unread emails: " + sent.getUnreadMessageCount());
+
             // Opening store folder
             sent.open(Folder.READ_ONLY);
-            Message messages[] = sent.search(new FlagTerm(new Flags(Flag.SEEN), true));
+
+            // Reads read messages
+            Message read_messages[] = sent.search(new FlagTerm(new Flags(Flag.SEEN), true));
+
+            //Message unread_messages[] = sent.search(new FlagTerm(new Flags(Flag.SEEN), false));
 
             // Setting up FetchProfile
             FetchProfile fp = new FetchProfile();
             fp.add(FetchProfile.Item.ENVELOPE);
             fp.add(FetchProfile.Item.CONTENT_INFO);
-            sent.fetch(messages, fp);
+            sent.fetch(read_messages, fp);
 
             // Creating an array of Emails to store each email
             Email[] emails = new Email[sent.getMessageCount()];
+            //Email[] emails = new Email[messages.length];
 
             try {
-                printFolder(messages, emails);
+                printFolder(read_messages, emails);
+
                 sent.close(true);
                 store.close();
             } catch (Exception ex) {
@@ -146,7 +153,10 @@ public class StoreEmails {
                 Multipart mp = (Multipart) msg.getContent();
                 int count = mp.getCount();
                 for (int i = 0; i < count; i++) {
-                    if (mp.getBodyPart(i).isMimeType("text/html")) {
+
+                    //System.out.println(mp.getBodyPart(i).getContentType());
+
+                    if (mp.getBodyPart(i).isMimeType("text/*")) {
                         writeEmail(mp.getBodyPart(i), email);
                     }
                 }
@@ -172,6 +182,7 @@ public class StoreEmails {
             }
 
             // writes everything in the buffer to disk without having to close
+            //System.out.println(msg.getContentType());
             writeFileCurrent.flush();
 
             // getContent Exception

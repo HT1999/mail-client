@@ -5,23 +5,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonStreamParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.commons.io.FileUtils;
 
-import javax.mail.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 
@@ -37,12 +31,12 @@ public class Controller implements Initializable{
     // facilitate interaction when list item is selected.
 
     @FXML
-    private ListView<EmailListView.EmailList> emailList;
+    public ListView<EmailListView.EmailList> emailList;
 
     @FXML
     private WebView wb = new WebView();
 
-    private Preferences preferences = Preferences.getPreferences();
+    //private Preferences preferences = Preferences.getPreferences();
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -53,7 +47,10 @@ public class Controller implements Initializable{
     // Reads emails
     public void loadButtonClicked() {
         System.out.println("User pressed load button");
-        StoreEmails.ReadSentMail(preferences.getEmail(), preferences.getPassword());
+
+        Preferences preferences = Preferences.getPreferences();
+
+        StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword());
 
         // After reading data, load to list view
         try {
@@ -79,7 +76,9 @@ public class Controller implements Initializable{
         }
     }
 
-    private void loadData() throws Exception{
+    public void loadData() throws Exception{
+
+        //ListView<EmailListView.EmailList> emailList = new ListView<EmailListView.EmailList>();
 
         // Opens JSON file and displays key Email information inside a ListView
         try {
@@ -97,6 +96,7 @@ public class Controller implements Initializable{
             // Cleans email ListView, otherwise data overwrites and gets duplicated
             // *** needs work, should'nt have to parse all emails every time you load ***
             emailList.getItems().clear();
+
 
             // Listing all emails headlines in a list view (sender, subject, date)
             for (int i = email_list.length - 1; i >= 0; i--) {
@@ -136,6 +136,7 @@ public class Controller implements Initializable{
         catch(Exception e) {
             // emails.json file not created...
             System.out.println("Initial JSON file not created.\nData needs to be loaded in!");
+            e.printStackTrace();
         }
 
     }

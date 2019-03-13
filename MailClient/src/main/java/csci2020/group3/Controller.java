@@ -26,17 +26,11 @@ public class Controller implements Initializable{
     //ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
     //ListView<EmailListView.EmailList> listView = new ListView<EmailListView.EmailList>(data);
 
-
-    // Create 3 more ObservableList's for subject, date, from, and 1 for id to
-    // facilitate interaction when list item is selected.
-
     @FXML
     public ListView<EmailListView.EmailList> emailList;
 
     @FXML
     private WebView wb = new WebView();
-
-    //private Preferences preferences = Preferences.getPreferences();
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -78,7 +72,6 @@ public class Controller implements Initializable{
 
     public void loadData() throws Exception{
 
-        //ListView<EmailListView.EmailList> emailList = new ListView<EmailListView.EmailList>();
 
         // Opens JSON file and displays key Email information inside a ListView
         try {
@@ -114,12 +107,15 @@ public class Controller implements Initializable{
                 }
             });
 
+            //emailList.scroll
+
             // Opening ListView items HTML contents in the WebView
             emailList.setOnMouseClicked(e -> {
                 System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
 
                 // Clean WebView contents
                 wb.getEngine().loadContent("");
+
 
                 File testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
                 try {

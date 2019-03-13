@@ -7,7 +7,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -45,9 +47,13 @@ public class SignIn {
         pane.setHgap(10);
         pane.setVgap(10);
 
+        pane.setStyle("-fx-background-color: #424242");
+
         // Collecting user email address
         Label email_lbl = new Label("Email");
+        email_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextField email = new TextField();
+        email.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
         email.setPromptText("Email");
         email.getText();
         email.setAlignment(Pos.CENTER_LEFT);
@@ -57,7 +63,9 @@ public class SignIn {
 
         // Collecting User email password
         Label pwd_lbl = new Label("Password");
+        pwd_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final PasswordField pwd = new PasswordField();
+        pwd.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
         pwd.setPromptText("Password");
         pwd.getText();
         pwd.setAlignment(Pos.CENTER_LEFT);
@@ -70,6 +78,17 @@ public class SignIn {
         login_btn.setPrefHeight(35);
         login_btn.setPrefWidth(100);
         login_btn.setDefaultButton(true);
+        login_btn.setTextFill(Paint.valueOf("#FFFFFF"));
+
+        // Styling the default send button
+        login_btn.setStyle("-fx-background-color: #757575;" +
+                "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+
+        // Styling on different mouse events
+        login_btn.setOnMouseEntered(e -> login_btn.setStyle("-fx-background-color: #9E9E9E;" +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+        login_btn.setOnMouseExited(e -> login_btn.setStyle("-fx-background-color: #757575;"  +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
 
         login_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override

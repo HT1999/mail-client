@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -42,9 +43,13 @@ public class CreateNewEmail {
         pane.setHgap(10);
         pane.setVgap(10);
 
+        pane.setStyle("-fx-background-color: #424242");
+
         // From email ** Temporary, should be autofilled by current users email
         Label from_lbl = new Label("From");
+        from_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextField from = new TextField(preferences.getEmail());
+        from.setStyle("-fx-background-color: #757575;" + "-fx-text-fill: #FFFFFF");
         from.getText();
         from.setAlignment(Pos.CENTER_LEFT);
         GridPane.setConstraints(from_lbl, 0, 0);
@@ -53,7 +58,9 @@ public class CreateNewEmail {
 
         // To email
         Label to_lbl = new Label("To");
+        to_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextField to = new TextField();
+        to.setStyle("-fx-background-color: #757575;" + "-fx-text-fill: #FFFFFF");
         to.setPromptText("Recipients");
         to.getText();
         to.setAlignment(Pos.CENTER_LEFT);
@@ -63,7 +70,9 @@ public class CreateNewEmail {
 
         // Subject
         Label subject_lbl = new Label("Subject");
+        subject_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextField subject = new TextField();
+        subject.setStyle("-fx-background-color: #757575;" + "-fx-text-fill: #FFFFFF");
         subject.setPromptText("Subject");
         subject.getText();
         to.setAlignment(Pos.CENTER_LEFT);
@@ -73,7 +82,9 @@ public class CreateNewEmail {
 
         // Message
         Label msg_lbl = new Label("Message");
+        msg_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextArea msg = new TextArea();
+        msg.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
         msg.setPromptText("Message");
         msg.getText();
         GridPane.setConstraints(msg_lbl, 0, 3);
@@ -85,9 +96,23 @@ public class CreateNewEmail {
 
         attach_field.setBackground(Background.EMPTY);
         attach_field.setText("");
+        attach_field.setStyle("-fx-text-fill: #FFFFFF");
 
         Button attach_btn = new Button();
+        // Styling the default attach button
+        attach_btn.setStyle("-fx-background-color: #757575;" +
+                            "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+        attach_btn.setTextFill(Paint.valueOf("#FFFFFF"));
+
+        // Styling on different mouse events
+        attach_btn.setOnMouseEntered(e -> attach_btn.setStyle("-fx-background-color: #9E9E9E;" +
+                                                                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+        attach_btn.setOnMouseExited(e -> attach_btn.setStyle("-fx-background-color: #757575;"  +
+                                                                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+
+        //csci2020/group3/style.css
         attach_btn.setGraphic(new ImageView("csci2020/group3/link.png"));
+
         attach_btn.setOnAction(e -> {
 
             // MacOS is picky with Swing, had to use
@@ -122,6 +147,18 @@ public class CreateNewEmail {
 
         // Cancel Button (closes new email window)
         Button cancel_btn = new Button("Cancel");
+        cancel_btn.setTextFill(Paint.valueOf("#FFFFFF"));
+
+        // Styling the default cancel button
+        cancel_btn.setStyle("-fx-background-color: #757575;" +
+                "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+
+        // Styling on different mouse events
+        cancel_btn.setOnMouseEntered(e -> cancel_btn.setStyle("-fx-background-color: #9E9E9E;" +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+        cancel_btn.setOnMouseExited(e -> cancel_btn.setStyle("-fx-background-color: #757575;"  +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+
         cancel_btn.setOnAction(e -> {
             Stage stage = (Stage) cancel_btn.getScene().getWindow();
             stage.close();
@@ -133,7 +170,19 @@ public class CreateNewEmail {
 
         // Send Button
         Button send_btn = new Button("Send");
-        //send_btn.setDefaultButton(true);
+        send_btn.setTextFill(Paint.valueOf("#FFFFFF"));
+
+
+        // Styling the default send button
+        send_btn.setStyle("-fx-background-color: #757575;" +
+                "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+
+        // Styling on different mouse events
+        send_btn.setOnMouseEntered(e -> send_btn.setStyle("-fx-background-color: #9E9E9E;" +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+        send_btn.setOnMouseExited(e -> send_btn.setStyle("-fx-background-color: #757575;"  +
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+
         send_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

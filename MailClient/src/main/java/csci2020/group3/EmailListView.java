@@ -1,9 +1,16 @@
 package csci2020.group3;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,7 +45,7 @@ public class EmailListView {
     }
 
     static public class EmailListCell extends ListCell<EmailList> {
-        private HBox content;
+        private VBox content;
         private Text name;
         private Text subject;
         private Text date;
@@ -46,11 +53,24 @@ public class EmailListView {
         public EmailListCell() {
             super();
             name = new Text();
+            name.setFont(Font.font("Open Sans", FontWeight.EXTRA_BOLD, 12));
+            name.setFill(Color.WHITE);
             subject = new Text();
+            subject.setFont(Font.font("Open Sans", FontWeight.EXTRA_LIGHT, 12));
+            subject.setFill(Color.WHITE);
             date = new Text();
-            VBox vBox = new VBox(name, subject, date);
-            content = new HBox(new Label("[temp]"), vBox);
+            date.setFont(Font.font("Open Sans", FontWeight.EXTRA_LIGHT, 12));
+            date.setFill(Color.WHITE);
+
+
+            content = new VBox(name, subject, date);
             content.setSpacing(5);
+            content.setPadding(new Insets(20, 10, 20, 10));
+            content.setStyle("fx-border-style: solid inside;" +
+                                "-fx-border-radius: 2;" +
+                                "-fx-border-color: #424242;");
+            //content = new HBox(vBox);
+            //content.setSpacing(2);
         }
 
         @Override
@@ -65,6 +85,14 @@ public class EmailListView {
                 date.setText(dateFormat.format(item.getDate()));
                 setGraphic(content);
             }
+        }
+
+        @Override
+        public void updateSelected(boolean selected) {
+            super.updateSelected(selected);
+            //String style =
+            content.setStyle(selected ? "-fx-background-color: #757575;" : "-fx-background-color: #212121;"
+                                + "-fx-border-color: #424242");
         }
     }
 

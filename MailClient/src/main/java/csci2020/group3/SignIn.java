@@ -82,13 +82,13 @@ public class SignIn {
 
         // Styling the default send button
         login_btn.setStyle("-fx-background-color: #757575;" +
-                "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+                            "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
 
         // Styling on different mouse events
         login_btn.setOnMouseEntered(e -> login_btn.setStyle("-fx-background-color: #9E9E9E;" +
-                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+                                                            "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
         login_btn.setOnMouseExited(e -> login_btn.setStyle("-fx-background-color: #757575;"  +
-                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+                                                            "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
 
         login_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -135,25 +135,6 @@ public class SignIn {
                         e.printStackTrace();
                     }
 
-                    // *******
-                    // On first sign-in, load users email data (temp fix, config.txt isn't being read
-                    // until the app is closed. reading from the data fields fixes that)
-
-                    StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword());
-
-                    try {
-                        Controller con = new Controller();
-                        con.loadData();
-                        //Controller.loadData();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    //System.out.println(preferences.getEmail() + "\n" + preferences.getPassword());
-//                    if (preferences.getEmail() == null || preferences.getPassword() == null) {
-//                        StoreEmails.storeEmails(email.getText(), pwd.getText());
-//                    }
-
                     // Invalid login attempt
                 } catch (MessagingException e) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Invalid email/password entered.");
@@ -161,9 +142,6 @@ public class SignIn {
                     errorAlert.showAndWait();
                     //e.printStackTrace();
                 }
-
-                // Close login window
-                //login_menu.close();
             }
         });
 

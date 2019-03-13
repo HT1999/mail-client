@@ -6,6 +6,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -115,27 +116,38 @@ public class CreateNewEmail {
 
         attach_btn.setOnAction(e -> {
 
-            // MacOS is picky with Swing, had to use
-            try {
-                EventQueue.invokeAndWait(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Uses JFileChooser interface for user to select the attachment file.
-                        JFileChooser finder = new JFileChooser();
-                        finder.showOpenDialog(null);
-                        File f = finder.getSelectedFile();
+            // MacOS is picky with Swing objects. Had to disable MacOS from
+            // attaching files to emails otherwise the application hangs.
+            String osName = System.getProperty("os.name");
+            if (osName.equals("Mac OS X")) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Unfortunately attachments cannot be added " +
+                                                                                "on your operating system. (MacOS)");
+                System.out.println("JFileChooser causes macOS to crash...\n" +
+                                    "Unfortunately emails cannot be attached on your operating system.");
+                errorAlert.showAndWait();
+            }
+            else {
+                try {
+                    EventQueue.invokeAndWait(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Uses JFileChooser interface for user to select the attachment file.
+                            JFileChooser finder = new JFileChooser();
+                            finder.showOpenDialog(null);
+                            File f = finder.getSelectedFile();
 
-                        // Outputs file names to textfield
-                        attach_path = f.getAbsolutePath();
-                        attach_field.setText(f.getName());
-                    }
-                });
-            } catch (InterruptedException e1) {
-                // User closes email attachment window.
-                //e1.printStackTrace();
-            } catch (InvocationTargetException e1) {
-                // Redundant exception, needed for invokeAndWait.
-                //e1.printStackTrace();
+                            // Outputs file names to textfield
+                            attach_path = f.getAbsolutePath();
+                            attach_field.setText(f.getName());
+                        }
+                    });
+                } catch (InterruptedException e1) {
+                    // User closes email attachment window.
+                    //e1.printStackTrace();
+                } catch (InvocationTargetException e1) {
+                    // Redundant exception, needed for invokeAndWait.
+                    //e1.printStackTrace();
+                }
             }
         });
 
@@ -197,7 +209,7 @@ public class CreateNewEmail {
 
         // Creating Scene and showing stage
         new_email.setTitle("New Message");
-        Scene sendEmailScene = new Scene(pane,600 , 400);
+        Scene sendEmailScene = new Scene(pane,650 , 400);
         new_email.setScene(sendEmailScene);
         new_email.show();
 

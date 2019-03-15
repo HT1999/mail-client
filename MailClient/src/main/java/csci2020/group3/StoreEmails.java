@@ -4,34 +4,26 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import javax.mail.*;
 import javax.mail.Flags.Flag;
+import javax.mail.internet.MimeMessage;
+import javax.mail.search.AndTerm;
 import javax.mail.search.FlagTerm;
+import javax.mail.search.MessageNumberTerm;
 
 public class StoreEmails {
-    private static Folder sent;
-    static FileWriter writeFile;
+    private static Folder folder;
     static FileWriter writeFileCurrent;
-    static FileWriter writeFileTest;
-
-    static {
-        try {
-            File file = new File("src/data/emails.txt");
-            file.getParentFile().mkdirs();
-            writeFile = new FileWriter(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public static void storeEmails(String email_addr, String pwd) {
 
         Properties props = System.getProperties();
-        props.setProperty("mail.store.protocol", "imaps");
+        //props.setProperty("mail.store.protocol", "imaps");
+        props.put("mail.imap.fetchsize", "819200");
+        props.setProperty("mail.imap.partialfetch", "false");
+        props.setProperty("mail.imaps.partialfetch", "false");
         try {
 
             // Initializing session and store var
@@ -40,33 +32,49 @@ public class StoreEmails {
             store.connect("imap.gmail.com", email_addr, pwd);
 
             // Loads specified folder and prints total number of emails inside
-            sent = store.getFolder("INBOX");
-            System.out.println("Total # of emails: " + sent.getMessageCount());
+            folder = store.getFolder("INBOX");
+            System.out.println("Total # of emails: " + folder.getMessageCount());
 
-            System.out.println("Total # of unread emails: " + sent.getUnreadMessageCount());
+            System.out.println("Total # of unread emails: " + folder.getUnreadMessageCount());
 
             // Opening store folder
-            sent.open(Folder.READ_ONLY);
+            folder.open(Folder.READ_ONLY);
+            //folder.open(Folder.)
 
             // Reads read messages
-            Message read_messages[] = sent.search(new FlagTerm(new Flags(Flag.SEEN), true));
+            Message read_messages[] = folder.search(new FlagTerm(new Flags(Flag.SEEN), true));
 
-            //Message unread_messages[] = sent.search(new FlagTerm(new Flags(Flag.SEEN), false));
+            // Reads unread messages
+            Message unread_messages[] = folder.search(new FlagTerm(new Flags(Flag.SEEN), false));
 
             // Setting up FetchProfile
             FetchProfile fp = new FetchProfile();
             fp.add(FetchProfile.Item.ENVELOPE);
             fp.add(FetchProfile.Item.CONTENT_INFO);
-            sent.fetch(read_messages, fp);
+            folder.fetch(read_messages, fp);
 
             // Creating an array of Emails to store each email
-            Email[] emails = new Email[sent.getMessageCount()];
-            //Email[] emails = new Email[messages.length];
+            Email[] emails = new Email[folder.getMessageCount()];
 
             try {
+
+                long startTime = System.nanoTime();
+
                 printFolder(read_messages, emails);
 
-                sent.close(true);
+                // If unread messages exist, it reads them and places them in their respective email position
+                if (unread_messages.length != 0) {
+                    System.out.println("Writing unread messages...");
+                    folder.fetch(unread_messages, fp);
+                    printFolder(unread_messages, emails);
+                }
+
+                // Temporarily setup to test different storing methods and their speeds
+                long endTime = System.nanoTime();
+                long timeElapsed = (endTime - startTime)/1000000000;
+                System.out.println("Time taken to load files: " + timeElapsed + "s");
+
+                folder.close(true);
                 store.close();
             } catch (Exception ex) {
                 System.out.println("Reading mail exception");
@@ -92,13 +100,13 @@ public class StoreEmails {
             Email email = new Email();
 
             System.out.println("Reading Email #" + (i + 1) + ".....");
-            writeFile.write("Email #" + (i + 1) + ":");
+            //writeFile.write("Email #" + (i + 1) + ":");
             email.setId(i+1);
 
             printEmail(msgs[i], email);
 
             // Copying current email to emails list
-            emails[count-1] = email;
+            emails[msgs[i].getMessageNumber()-1] = email;
 
             count--;
         }
@@ -144,9 +152,9 @@ public class StoreEmails {
     public static void getContent(Message msg, Email email) {
         try {
 
-            String contentType = msg.getContentType();
+            //String contentType = msg.getContentType();
 
-            writeFile.write("Content Type: " + contentType);
+            //writeFile.write("Content Type: " + contentType);
 
             // Checking if mimetype is a multipart
             if (msg.isMimeType("multipart/*")) {
@@ -177,7 +185,7 @@ public class StoreEmails {
 
                 String tp = msg.getContent().toString();
 
-                writeFile.write(tp);
+                //writeFile.write(tp);
                 writeFileCurrent.write(tp);
             }
 
@@ -212,7 +220,7 @@ public class StoreEmails {
         int w;
         while ((w = is.read()) != -1) {
             //FileWriter writeFile = new FileWriter("emails.txt");
-            writeFile.write(w);
+            //writeFile.write(w);
 
             writeFileCurrent.write(w);
 

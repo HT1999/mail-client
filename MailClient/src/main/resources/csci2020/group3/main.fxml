@@ -68,7 +68,7 @@
                      </font>
                         </Button>
                         <Region prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: #616161;" />
-                        <TextField prefHeight="25.0" prefWidth="215.0" promptText="Search..." style="-fx-background-color: #757575; -fx-text-fill: #E0E0E0; -fx-border-color: #9E9E9E;">
+                        <TextField id="searchField" fx:id="searchField" prefHeight="25.0" prefWidth="215.0" promptText="Search..." style="-fx-background-color: #757575; -fx-text-fill: #E0E0E0; -fx-border-color: #9E9E9E;">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>

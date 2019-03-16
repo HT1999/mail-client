@@ -15,7 +15,7 @@ import javax.mail.search.MessageNumberTerm;
 
 public class StoreEmails {
     private static Folder folder;
-    static FileWriter writeFileCurrent;
+    private static FileWriter writeFileCurrent;
 
     public static void storeEmails(String email_addr, String pwd, String mailbox) {
 
@@ -38,7 +38,10 @@ public class StoreEmails {
             System.out.println("Total # of unread emails: " + folder.getUnreadMessageCount());
 
             // Opening store folder
-            folder.open(Folder.READ_ONLY);
+            if (!folder.isOpen()) {
+                folder.open(Folder.READ_ONLY);
+            }
+            //folder.open(Folder.READ_ONLY);
             //folder.open(Folder.)
 
             // Reads read messages
@@ -58,8 +61,7 @@ public class StoreEmails {
 
             try {
 
-                long startTime = System.nanoTime();
-
+                System.out.println("Writing read messages...");
                 printFolder(read_messages, emails, mailbox);
 
                 // If unread messages exist, it reads them and places them in their respective email position
@@ -69,13 +71,8 @@ public class StoreEmails {
                     printFolder(unread_messages, emails, mailbox);
                 }
 
-                // Temporarily setup to test different storing methods and their speeds
-                long endTime = System.nanoTime();
-                long timeElapsed = (endTime - startTime)/1000000000;
-                System.out.println("Time taken to load files: " + timeElapsed + "s");
-
-                folder.close(true);
-                store.close();
+                //folder.close(true);
+                //store.close();
             } catch (Exception ex) {
                 System.out.println("Reading mail exception");
                 ex.printStackTrace();

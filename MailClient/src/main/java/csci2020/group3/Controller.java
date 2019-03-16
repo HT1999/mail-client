@@ -1,8 +1,5 @@
 package csci2020.group3;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,30 +25,14 @@ public class Controller implements Initializable{
 
     // Reads emails
     public void loadButtonClicked() {
-        System.out.println("User pressed load button");
 
+        // Grabbing users settings information
         Preferences preferences = Preferences.getPreferences();
 
-        // Creating an array of the different mailboxes to stage for loading
-        String[] mailboxList = new String[5];
-        mailboxList[0] = "INBOX";
-        mailboxList[1] = "[Gmail]/Sent Mail";
-        mailboxList[2] = "[Gmail]/Trash";
-        mailboxList[3] = "[Gmail]/Spam";
-        mailboxList[4] = "[Gmail]/Starred";
+        // Creates a new thread to handle reading/storing of emails.
+        Thread thread = new Thread(new loadThread(preferences.getEmail(), preferences.getPassword(), emailList, wb));
+        thread.start();
 
-        // Iterating through the mailboxes and storing them
-        for (int i = 0; i < 5; i++) {
-            StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword(), mailboxList[i]);
-        }
-
-        // After reading data, load to list view
-        try {
-            // First loads Inbox by default
-            loadListViewDataInbox();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)

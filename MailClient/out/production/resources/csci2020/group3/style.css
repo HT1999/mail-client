@@ -1,6 +1,112 @@
+
 .list-view .list-cell:even {
-    -fx-padding: 20 10 20 10;
+    -fx-background-color: #212121;
 }
+
 .list-view .list-cell:odd {
-    -fx-padding: 20 10 20 10;
+    -fx-background-color: #212121;
+
 }
+
+.menu .label{
+    -fx-text-fill: white;
+}
+
+.context-menu {
+    -fx-background-color: black;
+}
+
+/* Styling the main-page buttons */
+
+.refresh-button {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.new-email {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.new-email:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.search-button {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.search-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.reply-button {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.reply-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.forward-button {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.forward-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.delete-button {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+    -fx-text-fill: #FFFFFF;
+}
+
+.delete-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+
+.myTree .tree-cell {
+    -fx-background-color: #212121;
+}
+
+/* needed to color text area when making an email since textArea has more depth to it*/
+.text-area {
+    text-area-background: #757575 ;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background ;
+}
+
+.attach_btn {
+    -fx-background-color: #757575;
+    -fx-border-color: #9E9E9E;
+    -fx-border-radius: 1;
+}
+
+.attach_btn:hover {
+    -fx-background-color: #F5F5F5;
+}
+
+
+

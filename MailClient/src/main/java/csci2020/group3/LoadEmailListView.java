@@ -17,12 +17,13 @@ import java.io.IOException;
 
 public class LoadEmailListView {
 
-    public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb) throws Exception{
+    // Opens specified mailbox data and displays in the ListView
+    public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox) throws Exception{
 
 
         // Opens JSON file and displays key Email information inside a ListView
         try {
-            File file = new File("src/data/emails.json");
+            File file = new File("src/data/" + mailbox + "/emails.json");
             JsonStreamParser parser = new JsonStreamParser(new FileReader(file));
 
             Gson gson = new GsonBuilder().create();
@@ -34,7 +35,6 @@ public class LoadEmailListView {
             ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
 
             // Cleans email ListView, otherwise data overwrites and gets duplicated
-            // *** needs work, should'nt have to parse all emails every time you load ***
             emailList.getItems().clear();
 
 

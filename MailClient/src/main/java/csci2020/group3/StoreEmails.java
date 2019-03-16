@@ -17,7 +17,7 @@ public class StoreEmails {
     private static Folder folder;
     static FileWriter writeFileCurrent;
 
-    public static void storeEmails(String email_addr, String pwd) {
+    public static void storeEmails(String email_addr, String pwd, String mailbox) {
 
         Properties props = System.getProperties();
         //props.setProperty("mail.store.protocol", "imaps");
@@ -32,7 +32,7 @@ public class StoreEmails {
             store.connect("imap.gmail.com", email_addr, pwd);
 
             // Loads specified folder and prints total number of emails inside
-            folder = store.getFolder("INBOX");
+            folder = store.getFolder(mailbox);
             System.out.println("Total # of emails: " + folder.getMessageCount());
 
             System.out.println("Total # of unread emails: " + folder.getUnreadMessageCount());
@@ -60,13 +60,13 @@ public class StoreEmails {
 
                 long startTime = System.nanoTime();
 
-                printFolder(read_messages, emails);
+                printFolder(read_messages, emails, mailbox);
 
                 // If unread messages exist, it reads them and places them in their respective email position
                 if (unread_messages.length != 0) {
                     System.out.println("Writing unread messages...");
                     folder.fetch(unread_messages, fp);
-                    printFolder(unread_messages, emails);
+                    printFolder(unread_messages, emails, mailbox);
                 }
 
                 // Temporarily setup to test different storing methods and their speeds
@@ -91,7 +91,7 @@ public class StoreEmails {
 
     private static int count;
     // Outputs all emails from desired gmail folder
-    public static void printFolder(Message[] msgs, Email[] emails) throws Exception {
+    public static void printFolder(Message[] msgs, Email[] emails, String mailbox) throws Exception {
 
         count = msgs.length;
         for (int i = msgs.length - 1; i >= 0; i--) {
@@ -103,7 +103,7 @@ public class StoreEmails {
             //writeFile.write("Email #" + (i + 1) + ":");
             email.setId(i+1);
 
-            printEmail(msgs[i], email);
+            printEmail(msgs[i], email, mailbox);
 
             // Copying current email to emails list
             emails[msgs[i].getMessageNumber()-1] = email;
@@ -113,7 +113,7 @@ public class StoreEmails {
         //writeFile.close();
 
         // Creating json data file with all emails
-        File jsonFile = new File("src/data/emails.json");
+        File jsonFile = new File("src/data/" + mailbox + "/emails.json");
         jsonFile.getParentFile().mkdirs();
         try (Writer jsonOutput = new FileWriter(jsonFile)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -122,7 +122,7 @@ public class StoreEmails {
     }
 
     // Outputs Email
-    public static void printEmail(Message message, Email email) throws Exception {
+    public static void printEmail(Message message, Email email, String mailbox) throws Exception {
         Address[] a;
 
 
@@ -145,17 +145,12 @@ public class StoreEmails {
         email.setSubject(message.getSubject());
         email.setDate(message.getReceivedDate());
 
-        getContent(message, email);
+        getContent(message, email, mailbox);
 
     }
 
-    public static void getContent(Message msg, Email email) {
+    public static void getContent(Message msg, Email email, String mailbox) {
         try {
-
-            //String contentType = msg.getContentType();
-
-            //writeFile.write("Content Type: " + contentType);
-
             // Checking if mimetype is a multipart
             if (msg.isMimeType("multipart/*")) {
                 Multipart mp = (Multipart) msg.getContent();
@@ -165,7 +160,7 @@ public class StoreEmails {
                     //System.out.println(mp.getBodyPart(i).getContentType());
 
                     if (mp.getBodyPart(i).isMimeType("text/*")) {
-                        writeEmail(mp.getBodyPart(i), email);
+                        writeEmail(mp.getBodyPart(i), email, mailbox);
                     }
                 }
             }
@@ -175,22 +170,20 @@ public class StoreEmails {
 
                 // Creating text file to store current text content
                 try {
-                    File curr_file = new File("src/data/email-" + count + ".html");
+                    File curr_file = new File("src/data/" + mailbox + "/email-" + count + ".html");
                     curr_file.getParentFile().mkdirs();
                     writeFileCurrent = new FileWriter(curr_file);
-                    email.setContentPath("src/data/email-" + count + ".html");
+                    email.setContentPath("src/data/" + mailbox + "/email-" + count + ".html");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 String tp = msg.getContent().toString();
 
-                //writeFile.write(tp);
                 writeFileCurrent.write(tp);
             }
 
             // writes everything in the buffer to disk without having to close
-            //System.out.println(msg.getContentType());
             writeFileCurrent.flush();
 
             // getContent Exception
@@ -200,14 +193,14 @@ public class StoreEmails {
         }
     }
 
-    public static void writeEmail(Part p, Email email) throws Exception {
+    public static void writeEmail(Part p, Email email, String mailbox) throws Exception {
 
         // Creating html file to store current html content
         try {
-            File curr_file = new File("src/data/email-" + count + ".html");
+            File curr_file = new File("src/data/" + mailbox + "/email-" + count + ".html");
             curr_file.getParentFile().mkdirs();
             writeFileCurrent = new FileWriter(curr_file);
-            email.setContentPath("src/data/email-" + count + ".html");
+            email.setContentPath("src/data/" + mailbox + "/email-" + count + ".html");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -219,11 +212,7 @@ public class StoreEmails {
         }
         int w;
         while ((w = is.read()) != -1) {
-            //FileWriter writeFile = new FileWriter("emails.txt");
-            //writeFile.write(w);
-
             writeFileCurrent.write(w);
-
         }
     }
 

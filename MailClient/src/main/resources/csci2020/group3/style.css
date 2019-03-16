@@ -108,5 +108,54 @@
     -fx-background-color: #F5F5F5;
 }
 
+.inbox-button {
+    -fx-background-color: #424242;
+    -fx-border-color: #757575;
+    -fx-text-fill: #FFFFFF;
+}
+
+.inbox-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.sent-button {
+    -fx-background-color: #424242;
+    -fx-border-color: #757575;
+    -fx-text-fill: #FFFFFF;
+}
+
+.sent-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.starred-button {
+    -fx-background-color: #424242;
+    -fx-border-color: #757575;
+    -fx-text-fill: #FFFFFF;
+}
+
+.starred-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.spam-button {
+    -fx-background-color: #424242;
+    -fx-border-color: #757575;
+    -fx-text-fill: #FFFFFF;
+}
+
+.spam-button:hover {
+    -fx-background-color: #9E9E9E;
+}
+
+.trash-button {
+    -fx-background-color: #424242;
+    -fx-border-color: #757575;
+    -fx-text-fill: #FFFFFF;
+}
+
+.trash-button:hover {
+    -fx-background-color: #9E9E9E;
+}
 
 

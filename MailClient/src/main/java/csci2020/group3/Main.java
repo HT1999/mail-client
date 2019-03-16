@@ -11,9 +11,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
+import java.util.Properties;
+
 
 public class Main extends Application {
-
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -21,7 +26,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
 
         root.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-
 
         primaryStage.setTitle("Mail Client");
         primaryStage.setScene(new Scene(root, 900, 600));

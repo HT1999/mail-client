@@ -14,11 +14,6 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
 
-    ObservableList<String> list = FXCollections.observableArrayList();
-
-    //ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
-    //ListView<EmailListView.EmailList> listView = new ListView<EmailListView.EmailList>(data);
-
     @FXML
     public ListView<EmailListView.EmailList> emailList = new ListView<>();
 
@@ -37,11 +32,23 @@ public class Controller implements Initializable{
 
         Preferences preferences = Preferences.getPreferences();
 
-        StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword());
+        // Creating an array of the different mailboxes to stage for loading
+        String[] mailboxList = new String[5];
+        mailboxList[0] = "INBOX";
+        mailboxList[1] = "[Gmail]/Sent Mail";
+        mailboxList[2] = "[Gmail]/Trash";
+        mailboxList[3] = "[Gmail]/Spam";
+        mailboxList[4] = "[Gmail]/Starred";
+
+        // Iterating through the mailboxes and storing them
+        for (int i = 0; i < 5; i++) {
+            StoreEmails.storeEmails(preferences.getEmail(), preferences.getPassword(), mailboxList[i]);
+        }
 
         // After reading data, load to list view
         try {
-            loadListViewData();
+            // First loads Inbox by default
+            loadListViewDataInbox();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,15 +64,43 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            loadListViewData();
+            // Loads Inbox by default
+            loadListViewDataInbox();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Fills Emails ListView with data
-    public void loadListViewData() throws Exception{
-        LoadEmailListView.loadData(emailList, wb);
+
+    // Have to use separate methods for fxml buttons
+    // Method for Inbox button
+    @FXML
+    public void loadListViewDataInbox() throws Exception {
+        LoadEmailListView.loadData(emailList, wb, "INBOX");
+    }
+
+    // Method for Sent button
+    @FXML
+    public void loadListViewDataSent() throws Exception {
+        LoadEmailListView.loadData(emailList, wb, "[Gmail]/Sent Mail");
+    }
+
+    // Method for Starred button
+    @FXML
+    public void loadListViewDataStarred() throws Exception {
+        LoadEmailListView.loadData(emailList, wb, "[Gmail]/Starred");
+    }
+
+    // Method for Spam button
+    @FXML
+    public void loadListViewDataSpam() throws Exception {
+        LoadEmailListView.loadData(emailList, wb, "[Gmail]/Spam");
+    }
+
+    // Method for Trash button
+    @FXML
+    public void loadListViewDataTrash() throws Exception {
+        LoadEmailListView.loadData(emailList, wb, "[Gmail]/Trash");
     }
 
 }

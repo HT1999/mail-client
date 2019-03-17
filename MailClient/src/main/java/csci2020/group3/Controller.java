@@ -41,6 +41,12 @@ public class Controller implements Initializable{
         newSignIn.signInButtonClicked();
     }
 
+    // Creates about windows under help menu
+    public void aboutButtonClicked() throws Exception {
+        AboutHelp help = new AboutHelp();
+        help.aboutButtonClicked();
+    }
+
     //
     @Override
     public void initialize(URL url, ResourceBundle rb) {

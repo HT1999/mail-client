@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
-
+import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,6 +16,30 @@ public class Controller implements Initializable{
 
     @FXML
     private WebView wb = new WebView();
+
+    // Main window buttons
+    @FXML
+    Button newEmailBtn;
+    @FXML
+    Button loadBtn;
+    @FXML
+    Button replyBtn;
+    @FXML
+    Button fwdBtn;
+    @FXML
+    Button deleteBtn;
+    @FXML
+    Button inboxBtn;
+    @FXML
+    Button sentBtn;
+    @FXML
+    Button starredBtn;
+    @FXML
+    Button spamBtn;
+    @FXML
+    Button trashBtn;
+    @FXML
+    Button searchBtn;
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -35,10 +59,28 @@ public class Controller implements Initializable{
 
     }
 
-    // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)
+    // Creates the signInButtonClicked window on button click and handles sign in.
     public void signInButtonClicked() throws Exception {
-        SignIn newSignIn = new SignIn();
+        // Initializing array of the main window buttons to disable for un-authorized users
+        Button[] buttons = {newEmailBtn, loadBtn, replyBtn, fwdBtn, deleteBtn, inboxBtn,
+                sentBtn, starredBtn, spamBtn, trashBtn, searchBtn};
+        //ButtonState bs = new ButtonState();
+        SignIn newSignIn = new SignIn(buttons);
         newSignIn.signInButtonClicked();
+    }
+
+    public void signOutButtonClicked() {
+        SignOut so = new SignOut();
+        so.signOut();
+
+        // Closes application
+        Stage stage = (Stage) emailList.getScene().getWindow();
+        stage.close();
+    }
+
+    public void closeButtonClicked() {
+        Stage stage = (Stage) emailList.getScene().getWindow();
+        stage.close();
     }
 
     // Creates about windows under help menu
@@ -50,6 +92,16 @@ public class Controller implements Initializable{
     //
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Initializing array of the main window buttons to disable for un-authorized users
+        Button[] buttons = {newEmailBtn, loadBtn, replyBtn, fwdBtn, deleteBtn, inboxBtn,
+                sentBtn, starredBtn, spamBtn, trashBtn, searchBtn};
+        ButtonState bs = new ButtonState();
+        try {
+            bs.setButtons(buttons);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             // Loads Inbox by default
             loadListViewDataInbox();
@@ -57,7 +109,6 @@ public class Controller implements Initializable{
             e.printStackTrace();
         }
     }
-
 
     // Have to use separate methods for fxml buttons
     // Method for Inbox button
@@ -89,5 +140,6 @@ public class Controller implements Initializable{
     public void loadListViewDataTrash() throws Exception {
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Trash");
     }
+
 
 }

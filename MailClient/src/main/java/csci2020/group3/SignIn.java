@@ -21,6 +21,13 @@ import java.util.concurrent.TimeUnit;
 
 public class SignIn {
 
+    Button[] buttons;
+
+    // Constructor, need to pass fxml buttons inorder to change state on successful a login
+    SignIn(Button[] buttons) {
+        this.buttons = buttons;
+    }
+
     // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)
     public void signInButtonClicked() throws Exception{
 
@@ -82,13 +89,13 @@ public class SignIn {
 
         // Styling the default send button
         login_btn.setStyle("-fx-background-color: #757575;" +
-                            "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
+                "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
 
         // Styling on different mouse events
         login_btn.setOnMouseEntered(e -> login_btn.setStyle("-fx-background-color: #9E9E9E;" +
-                                                            "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
         login_btn.setOnMouseExited(e -> login_btn.setStyle("-fx-background-color: #757575;"  +
-                                                            "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
+                "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
 
         login_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -125,6 +132,10 @@ public class SignIn {
                     // Successful login popup
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful Sign-In", ButtonType.OK);
                     alert.showAndWait();
+
+                    // Enable main window buttons
+                    ButtonState bs = new ButtonState();
+                    bs.setButtons(buttons);
 
                     // Close login window
                     login_menu.close();

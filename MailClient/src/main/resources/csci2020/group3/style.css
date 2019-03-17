@@ -91,11 +91,13 @@
 
 /* needed to color text area when making an email since textArea has more depth to it*/
 .text-area {
-    text-area-background: #757575 ;
+    -text-area-background: #757575 ;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-area .content {
     -fx-background-color: text-area-background ;
+    -fx-text-fill: #FFFFFF;
 }
 
 .attach_btn {
@@ -157,5 +159,3 @@
 .trash-button:hover {
     -fx-background-color: #9E9E9E;
 }
-
-

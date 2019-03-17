@@ -21,7 +21,7 @@ public class StoreEmails {
 
         Properties props = System.getProperties();
         //props.setProperty("mail.store.protocol", "imaps");
-        props.put("mail.imap.fetchsize", "819200");
+        props.put("mail.imap.fetchsize", "100000");
         props.setProperty("mail.imap.partialfetch", "false");
         props.setProperty("mail.imaps.partialfetch", "false");
         try {

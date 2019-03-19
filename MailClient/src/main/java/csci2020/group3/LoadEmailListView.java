@@ -37,9 +37,6 @@ public class LoadEmailListView {
             // Creating data variable to store custom email list class elements
             ObservableList<EmailListView.EmailList> data = FXCollections.observableArrayList();
 
-            // Cleans email ListView, otherwise data overwrites and gets duplicated
-            emailList.getItems().clear();
-
 
             // Listing all emails headlines in a list view (sender, subject, date)
             for (int i = email_list.length - 1; i >= 0; i--) {
@@ -51,6 +48,7 @@ public class LoadEmailListView {
             FilteredList<EmailListView.EmailList> filteredData = new FilteredList<>(data.filtered(in -> true));
 
             // Adding listener to searchField, handles the listview filtering
+
             searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(email -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -60,13 +58,19 @@ public class LoadEmailListView {
                     // Converting keyphrase to lowercase string
                     String filter = newValue.toLowerCase();
 
-                    // Search for specified keyphrase in the emails sender's name
-                    if (email.getName().toLowerCase().contains(filter)) {
-                        return true;
+                    try {
+                        // Search for specified keyphrase in the emails sender's name
+                        if (email.getName().toLowerCase().contains(filter)) {
+                            return true;
+                        }
+                        // Search for specified keyphrase in the emails subject line
+                        else if (email.getSubject().toLowerCase().contains(filter)) {
+                            return true;
+                        }
                     }
-                    // Search for specified keyphrase in the emails subject line
-                    else if (email.getSubject().toLowerCase().contains(filter)) {
-                        return true;
+                    catch (Exception e) {
+                        // Nothing fatal... not concerning and keeps console clean
+                        //e.printStackTrace();
                     }
                     // Otherwise keyphrase not found, do not show ListCell
                     return false;
@@ -96,15 +100,21 @@ public class LoadEmailListView {
                 wb.getEngine().loadContent("");
 
 
-                File testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
-                try {
-                    // set WebView to emails content path
-                    String str =  FileUtils.readFileToString(testFile, "UTF-8");
-                    wb.getEngine().loadContent(str);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                File testFile;
+                if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
+                    testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
+                    try {
+                        // set WebView to emails content path
+                        String str =  FileUtils.readFileToString(testFile, "UTF-8");
+                        wb.getEngine().loadContent(str);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
 
+                }
+                else {
+                    wb.getEngine().loadContent("Error loading specified email.");
+                }
 
             });
             emailList.refresh();

@@ -38,6 +38,7 @@ public class SignOut {
             for(File f: folder) {
                 // Deletes file or directory depending
                 if(f.isDirectory()) {
+                    System.out.println("deleting directory...");
                     deleteDir(f);
 
                 } else {

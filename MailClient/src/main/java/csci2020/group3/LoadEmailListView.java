@@ -5,8 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonStreamParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import org.apache.commons.io.FileUtils;
@@ -18,7 +21,7 @@ import java.io.IOException;
 public class LoadEmailListView {
 
     // Opens specified mailbox data and displays in the ListView
-    public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox) throws Exception{
+    public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox, TextField searchField) throws Exception{
 
 
         // Opens JSON file and displays key Email information inside a ListView
@@ -44,8 +47,38 @@ public class LoadEmailListView {
                         email_list[i].getId(), email_list[i].getContentPath()));
             }
 
-            //emailList.getItems().addAll(data);
-            emailList.setItems(data);
+            // Wrapping observable list with a filtered list
+            FilteredList<EmailListView.EmailList> filteredData = new FilteredList<>(data.filtered(in -> true));
+
+            // Adding listener to searchField, handles the listview filtering
+            searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(email -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    // Converting keyphrase to lowercase string
+                    String filter = newValue.toLowerCase();
+
+                    // Search for specified keyphrase in the emails sender's name
+                    if (email.getName().toLowerCase().contains(filter)) {
+                        return true;
+                    }
+                    // Search for specified keyphrase in the emails subject line
+                    else if (email.getSubject().toLowerCase().contains(filter)) {
+                        return true;
+                    }
+                    // Otherwise keyphrase not found, do not show ListCell
+                    return false;
+                });
+            }));
+
+            // Creating SortedList with the data sorted ListView data
+            SortedList<EmailListView.EmailList> sortedData = new SortedList<>(filteredData);
+
+            // Placing items inside the email ListView
+            emailList.setItems(sortedData);
+            //emailList.setItems(data);
 
             // Needed to implement custom email cell design
             emailList.setCellFactory(new Callback<ListView<EmailListView.EmailList>, ListCell<EmailListView.EmailList>>() {

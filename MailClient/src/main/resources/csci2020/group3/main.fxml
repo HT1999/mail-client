@@ -69,7 +69,7 @@
                             </font>
                         </Button>
                         <Region prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: #616161;" />
-                        <TextField id="searchField" fx:id="searchField" prefHeight="25.0" prefWidth="215.0" promptText="Search..." style="-fx-background-color: #757575; -fx-text-fill: #E0E0E0; -fx-border-color: #9E9E9E;">
+                        <TextField id="searchField" fx:id="searchField" prefHeight="25.0" prefWidth="255.0" promptText="Search..." style="-fx-background-color: #757575; -fx-text-fill: #E0E0E0; -fx-border-color: #9E9E9E;">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
@@ -77,11 +77,8 @@
                                 <Font name="Calibri" size="12.0" />
                             </font>
                         </TextField>
-                        <Button fx:id="searchBtn" mnemonicParsing="false" styleClass="search-button" stylesheets="@style.css" text="Search" textFill="#212121">
-                            <font>
-                                <Font name="Calibri" size="12.0" />
-                            </font></Button>
-                        <Region prefHeight="28.0" prefWidth="86.0" style="-fx-background-color: #616161;" HBox.hgrow="ALWAYS" />
+
+                        <Region prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #616161;" HBox.hgrow="ALWAYS" />
                         <Button id="reply-button" fx:id="replyBtn" mnemonicParsing="false" styleClass="reply-button" stylesheets="@style.css" text="Reply" textFill="#212121">
                             <font>
                                 <Font name="Calibri" size="12.0" />

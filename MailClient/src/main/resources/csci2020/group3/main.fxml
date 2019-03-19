@@ -119,7 +119,7 @@
                         <Insets left="5.0" right="5.0" />
                     </padding>
                 </VBox>
-                <ListView id="emailList" fx:id="emailList" maxWidth="286.0" minWidth="286.0" prefWidth="286.0" style="-fx-background-color: #212121; -fx-border-color: #424242;" />
+                <ListView id="emailList" fx:id="emailList" maxWidth="286.0" minWidth="286.0" prefWidth="286.0" style="-fx-background-color: #212121; -fx-border-color: #424242;" HBox.hgrow="ALWAYS" />
                 <WebView id="wb" fx:id="wb" blendMode="DARKEN" minHeight="-1.0" minWidth="430.0" prefHeight="-1.0" prefWidth="430.0" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>

@@ -98,11 +98,12 @@ public class StoreEmails {
 
             System.out.println("Reading Email #" + (i + 1) + ".....");
             //writeFile.write("Email #" + (i + 1) + ":");
-            email.setId(i+1);
+            //email.setId(i+1);
+            email.setId(msgs[i].getMessageNumber());
 
             printEmail(msgs[i], email, mailbox);
 
-            // Copying current email to emails list
+            // Copying current email to emails list (-1 to compensate for array index)
             emails[msgs[i].getMessageNumber()-1] = email;
 
             count--;
@@ -151,8 +152,7 @@ public class StoreEmails {
             // Checking if mimetype is a multipart
             if (msg.isMimeType("multipart/*")) {
                 Multipart mp = (Multipart) msg.getContent();
-                int count = mp.getCount();
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < mp.getCount(); i++) {
 
                     //System.out.println(mp.getBodyPart(i).getContentType());
 
@@ -167,10 +167,10 @@ public class StoreEmails {
 
                 // Creating text file to store current text content
                 try {
-                    File curr_file = new File("src/data/" + mailbox + "/email-" + count + ".html");
+                    File curr_file = new File("src/data/" + mailbox + "/email-" + msg.getMessageNumber() + ".html");
                     curr_file.getParentFile().mkdirs();
                     writeFileCurrent = new FileWriter(curr_file);
-                    email.setContentPath("src/data/" + mailbox + "/email-" + count + ".html");
+                    email.setContentPath("src/data/" + mailbox + "/email-" + msg.getMessageNumber() + ".html");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -194,10 +194,10 @@ public class StoreEmails {
 
         // Creating html file to store current html content
         try {
-            File curr_file = new File("src/data/" + mailbox + "/email-" + count + ".html");
+            File curr_file = new File("src/data/" + mailbox + "/email-" + email.getId() + ".html");
             curr_file.getParentFile().mkdirs();
             writeFileCurrent = new FileWriter(curr_file);
-            email.setContentPath("src/data/" + mailbox + "/email-" + count + ".html");
+            email.setContentPath("src/data/" + mailbox + "/email-" + email.getId() + ".html");
         } catch (IOException e) {
             e.printStackTrace();
         }

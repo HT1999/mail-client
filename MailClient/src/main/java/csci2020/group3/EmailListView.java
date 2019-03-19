@@ -76,9 +76,16 @@ public class EmailListView {
         @Override
         // updates current list box
         public void updateItem(EmailList item, boolean empty) {
+
             super.updateItem(item, empty);
+
+            // if null, set the cells content to null
+            if (item == null) {
+                setGraphic(null);
+            }
+
             // make sure item isn't empty
-            if (item != null && !empty) {
+            else if (!empty) {
                 name.setText(item.getName());
                 subject.setText(item.getSubject());
                 DateFormat dateFormat = new SimpleDateFormat("dd-M-yy");

@@ -2,6 +2,7 @@ package csci2020.group3;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;

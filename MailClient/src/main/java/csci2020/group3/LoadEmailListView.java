@@ -99,9 +99,13 @@ public class LoadEmailListView {
                 // Clean WebView contents
                 wb.getEngine().loadContent("");
 
-
                 File testFile;
-                if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
+
+                // If an empty space is pressed inside the ListView
+                if (emailList.getSelectionModel().getSelectedItem() == null) {
+                    wb.getEngine().loadContent("");
+                }
+                else if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
                     testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
                     try {
                         // set WebView to emails content path
@@ -115,7 +119,6 @@ public class LoadEmailListView {
                 else {
                     wb.getEngine().loadContent("Error loading specified email.");
                 }
-
             });
             emailList.refresh();
         }

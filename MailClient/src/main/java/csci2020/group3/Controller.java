@@ -1,5 +1,6 @@
 package csci2020.group3;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -42,6 +43,10 @@ public class Controller implements Initializable{
     Button spamBtn;
     @FXML
     Button trashBtn;
+    @FXML
+    MenuItem signinMenu;
+    @FXML
+    MenuItem signoutMenu;
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -66,9 +71,10 @@ public class Controller implements Initializable{
         // Initializing array of the main window buttons to disable for un-authorized users
         Button[] buttons = {newEmailBtn, loadBtn, replyBtn, fwdBtn, deleteBtn, inboxBtn,
                 sentBtn, starredBtn, spamBtn, trashBtn};
-        //ButtonState bs = new ButtonState();
-        SignIn newSignIn = new SignIn(buttons);
-        newSignIn.signInButtonClicked();
+
+        // Running signing method on a separate thread
+        Thread signinThread = new Thread(new SigninThread(buttons, signinMenu, signoutMenu));
+        signinThread.start();
     }
 
     public void signOutButtonClicked() {
@@ -91,7 +97,7 @@ public class Controller implements Initializable{
         help.aboutButtonClicked();
     }
 
-    //
+    // Initializes Buttons, MenuItems, and the ListView
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Initializing array of the main window buttons to disable for un-authorized users
@@ -100,6 +106,7 @@ public class Controller implements Initializable{
         ButtonState bs = new ButtonState();
 
         try {
+            bs.setMenuBarItems(signinMenu, signoutMenu);
             bs.setButtons(buttons);
         } catch(Exception e) {
             e.printStackTrace();

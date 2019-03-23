@@ -25,14 +25,9 @@
                     <menus>
                         <Menu id="details" mnemonicParsing="false" styleClass="details" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#signInButtonClicked" text="Sign In" />
-                                <MenuItem mnemonicParsing="false" onAction="#signOutButtonClicked" text="Sign Out" />
+                                <MenuItem fx:id="signinMenu" mnemonicParsing="false" onAction="#signInButtonClicked" text="Sign In" />
+                                <MenuItem fx:id="signoutMenu" mnemonicParsing="false" onAction="#signOutButtonClicked" text="Sign Out" />
                                 <MenuItem mnemonicParsing="false" onAction="#closeButtonClicked" text="Close" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">

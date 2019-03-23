@@ -22,10 +22,14 @@ import java.util.concurrent.TimeUnit;
 public class SignIn {
 
     Button[] buttons;
+    MenuItem signinMenu;
+    MenuItem signoutMenu;
 
     // Constructor, need to pass fxml buttons inorder to change state on successful a login
-    SignIn(Button[] buttons) {
+    SignIn(Button[] buttons, MenuItem signinMenu, MenuItem signoutMenu) {
         this.buttons = buttons;
+        this.signinMenu = signinMenu;
+        this.signoutMenu = signoutMenu;
     }
 
     // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)
@@ -133,9 +137,10 @@ public class SignIn {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful Sign-In", ButtonType.OK);
                     alert.showAndWait();
 
-                    // Enable main window buttons
+                    // Enable main window buttons and enables/disable sign in/out MenuItems
                     ButtonState bs = new ButtonState();
                     bs.setButtons(buttons);
+                    bs.setMenuBarItems(signinMenu, signoutMenu);
 
                     // Close login window
                     login_menu.close();

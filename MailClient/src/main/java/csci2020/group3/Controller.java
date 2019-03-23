@@ -7,8 +7,12 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 public class Controller implements Initializable{
@@ -51,7 +55,7 @@ public class Controller implements Initializable{
     // onclick method to generate new email window
     public void newButtonClicked() {
         CreateNewEmail newEmail = new CreateNewEmail();
-        newEmail.newButtonClicked();
+        newEmail.newButtonClicked(null, null, null);
     }
 
     // Reads emails
@@ -63,7 +67,6 @@ public class Controller implements Initializable{
         // Creates a new thread to handle reading/storing of emails.
         Thread thread = new Thread(new loadThread(preferences.getEmail(), preferences.getPassword(), emailList, wb, searchField));
         thread.start();
-
     }
 
     // Creates the signInButtonClicked window on button click and handles sign in.
@@ -95,6 +98,30 @@ public class Controller implements Initializable{
     public void aboutButtonClicked() throws Exception {
         AboutHelp help = new AboutHelp();
         help.aboutButtonClicked();
+    }
+
+    // Opens new email window with to field auto filled with selected email
+    public void replyButtonClicked() {
+        CreateNewEmail newEmail = new CreateNewEmail();
+
+        if (emailList.getSelectionModel().getSelectedItem() != null) {
+            newEmail.newButtonClicked(emailList.getSelectionModel().getSelectedItem().getName(), null, null);
+        }
+    }
+
+    public void forwardButtonClicked() {
+        CreateNewEmail newEmail = new CreateNewEmail();
+
+        // Writing emailList path contents to a string
+        String content;
+        try {
+            content = new Scanner(new File(emailList.getSelectionModel().getSelectedItem().getPath())).useDelimiter("\\Z").next();
+            if (emailList.getSelectionModel().getSelectedItem() != null) {
+                newEmail.newButtonClicked(null, emailList.getSelectionModel().getSelectedItem().getSubject(), content);
+            }
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+        }
     }
 
     // Initializes Buttons, MenuItems, and the ListView

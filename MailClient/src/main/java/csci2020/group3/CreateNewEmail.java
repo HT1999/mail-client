@@ -31,7 +31,7 @@ public class CreateNewEmail {
     public static TextField attach_field = new TextField();
 
     // onclick method to generate new email window
-    public void newButtonClicked() {
+    public void newButtonClicked(String receiver, String subj, String content) {
         System.out.println("User pressed new button...");
 
         // Create new send email window
@@ -64,6 +64,10 @@ public class CreateNewEmail {
         to.setStyle("-fx-background-color: #757575;" + "-fx-text-fill: #FFFFFF");
         to.setPromptText("Recipients");
         to.getText();
+
+        if (receiver != null) {
+            to.setText(receiver);
+        }
         to.setAlignment(Pos.CENTER_LEFT);
         GridPane.setConstraints(to_lbl, 0, 1);
         GridPane.setConstraints(to, 1, 1);
@@ -76,6 +80,10 @@ public class CreateNewEmail {
         subject.setStyle("-fx-background-color: #757575;" + "-fx-text-fill: #FFFFFF");
         subject.setPromptText("Subject");
         subject.getText();
+
+        if (subject != null) {
+            subject.setText(subj);
+        }
         to.setAlignment(Pos.CENTER_LEFT);
         GridPane.setConstraints(subject_lbl, 0, 2);
         GridPane.setConstraints(subject, 1, 2);
@@ -88,6 +96,10 @@ public class CreateNewEmail {
         msg.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
         msg.setPromptText("Message");
         msg.getText();
+
+        if (msg != null) {
+            msg.setText(content);
+        }
         GridPane.setConstraints(msg_lbl, 0, 3);
         GridPane.setConstraints(msg, 1, 3);
         pane.getChildren().addAll(msg_lbl, msg);

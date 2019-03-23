@@ -39,6 +39,6 @@ public class ButtonState {
             signin.setVisible(true);
             signout.setVisible(false);
         }
-
     }
+
 }

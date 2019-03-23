@@ -15,11 +15,16 @@ public class SignOut {
             File file = new File(Preferences.CONFIG_FILE);
             file.delete();
 
+            // Manually making sure Inbox emails.json is deleted
+            File inbox_file = new File("/data/INBOX/emails.json");
+            inbox_file.delete();
+
             // Clearing the data files
             file = new File("src/data/INBOX");
             deleteDir(file);
             file = new File("src/data/[Gmail]");
             deleteDir(file);
+
         } catch(Exception e) {
             // Sign out error exception
             Alert alert = new Alert(Alert.AlertType.ERROR);

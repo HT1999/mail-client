@@ -74,11 +74,11 @@
                         </TextField>
 
                         <Region prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #616161;" HBox.hgrow="ALWAYS" />
-                        <Button id="reply-button" fx:id="replyBtn" mnemonicParsing="false" styleClass="reply-button" stylesheets="@style.css" text="Reply" textFill="#212121">
+                        <Button id="reply-button" fx:id="replyBtn" mnemonicParsing="false" onAction="#replyButtonClicked" styleClass="reply-button" stylesheets="@style.css" text="Reply" textFill="#212121">
                             <font>
                                 <Font name="Calibri" size="12.0" />
                             </font></Button>
-                        <Button fx:id="fwdBtn" mnemonicParsing="false" styleClass="forward-button" stylesheets="@style.css" text="Forward" textFill="#212121">
+                        <Button fx:id="fwdBtn" mnemonicParsing="false" onAction="#forwardButtonClicked" styleClass="forward-button" stylesheets="@style.css" text="Forward" textFill="#212121">
                             <font>
                                 <Font name="Calibri" size="12.0" />
                             </font></Button>

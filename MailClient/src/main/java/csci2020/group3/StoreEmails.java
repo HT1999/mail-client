@@ -73,6 +73,9 @@ public class StoreEmails {
                     printFolder(unread_messages, emails, mailbox);
                 }
 
+                // Marking all emails as read for next loading
+
+
                 //folder.close(true);
                 //store.close();
             } catch (Exception ex) {

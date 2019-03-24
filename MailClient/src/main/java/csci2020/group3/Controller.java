@@ -58,6 +58,9 @@ public class Controller implements Initializable{
     @FXML
     MenuItem signoutMenu;
 
+    // Keeps track of current mailbox being viewed in the application (helper for email deletion)
+    private String mailboxCurrent = "INBOX";
+
 
     // onclick method to generate new email window
     public void newButtonClicked() {
@@ -121,8 +124,9 @@ public class Controller implements Initializable{
 
     // Creates about windows under help menu
     public void deleteButtonClicked() throws Exception {
-        DeleteEmail help = new DeleteEmail();
-        help.deleteButtonClicked();
+        int emailIndex = emailList.getSelectionModel().getSelectedItem().getId();
+        DeleteEmail deleteBtn = new DeleteEmail(emailList, emailIndex, mailboxCurrent, wb, searchField);
+        deleteBtn.deleteButtonClicked();
     }
 
     public void forwardButtonClicked() {
@@ -180,34 +184,38 @@ public class Controller implements Initializable{
         }
     }
 
-    // Have to use separate methods for fxml buttons
     // Method for sidebar buttons, activated when clicked
     @FXML
     public void loadListViewDataInbox() throws Exception {
+        mailboxCurrent = "INBOX";
         LoadEmailListView.loadData(emailList, wb, "INBOX", searchField);
     }
 
     // Method for Sent button
     @FXML
     public void loadListViewDataSent() throws Exception {
+        mailboxCurrent = "[Gmail]/Sent Mail";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Sent Mail", searchField);
     }
 
     // Method for Starred button
     @FXML
     public void loadListViewDataStarred() throws Exception {
+        mailboxCurrent = "[Gmail]/Starred";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Starred", searchField);
     }
 
     // Method for Spam button
     @FXML
     public void loadListViewDataSpam() throws Exception {
+        mailboxCurrent = "[Gmail]/Spam";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Spam", searchField);
     }
 
     // Method for Trash button
     @FXML
     public void loadListViewDataTrash() throws Exception {
+        mailboxCurrent = "[Gmail]/Trash";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Trash", searchField);
     }
 

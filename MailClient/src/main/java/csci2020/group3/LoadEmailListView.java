@@ -20,6 +20,8 @@ import java.io.IOException;
 
 public class LoadEmailListView {
 
+    //ListView emailList;
+
     // Opens specified mailbox data and displays in the ListView
     public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox, TextField searchField) throws Exception{
 
@@ -111,7 +113,6 @@ public class LoadEmailListView {
                     try {
                         // set WebView to emails content path
                         String str =  FileUtils.readFileToString(testFile, "UTF-8");
-                        System.out.println("file path: " + testFile);
                         wb.getEngine().loadContent(str);
                     } catch (IOException e1) {
                         e1.printStackTrace();

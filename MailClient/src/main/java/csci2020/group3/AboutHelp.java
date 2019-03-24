@@ -48,9 +48,5 @@ public class AboutHelp {
         Scene aboutScene = new Scene(pane,270 , 180);
         about_window.setScene(aboutScene);
         about_window.show();
-
-
     }
-
-
 }

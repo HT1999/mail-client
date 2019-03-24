@@ -8,7 +8,6 @@ public class DeleteEmail {
     public void deleteButtonClicked() throws Exception{
         System.out.println("User clicked delete button");
 
-
         // Find message in server to delete (create java class to track state of which message is selected)
         // number = getMessageNumber();
 

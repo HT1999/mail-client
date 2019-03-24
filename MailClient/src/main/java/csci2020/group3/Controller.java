@@ -113,6 +113,12 @@ public class Controller implements Initializable{
         }
     }
 
+    // Creates about windows under help menu
+    public void deleteButtonClicked() throws Exception {
+        DeleteEmail help = new DeleteEmail();
+        help.deleteButtonClicked();
+    }
+
     public void forwardButtonClicked() {
         CreateNewEmail newEmail = new CreateNewEmail();
 

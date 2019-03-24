@@ -24,15 +24,17 @@ public class AboutHelp {
         pane.setHgap(10);
         pane.setVgap(10);
 
+        // Add text to be shown in window
         final Text aboutInfo = new Text("Email Client 2019");
         final Text created = new Text("Created by: ");
         final Text spencer = new Text("\tSpencer Gray");
         final Text hassan = new Text("\tHassan Tariq");
         final Text sailesh = new Text("\tSailesh Sharma");
 
+        // Change title font
         aboutInfo.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
-
+        // Place text in correct positions
         GridPane.setConstraints(aboutInfo, 0, 0);
         GridPane.setConstraints(created, 0, 2);
         GridPane.setConstraints(spencer, 0, 3);

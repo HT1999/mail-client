@@ -16,6 +16,7 @@ import javax.mail.search.MessageNumberTerm;
 public class StoreEmails {
     private static Folder folder;
     private static FileWriter writeFileCurrent;
+    public static Email[] emails;
 
     public static void storeEmails(String email_addr, String pwd, String mailbox) {
 
@@ -57,8 +58,9 @@ public class StoreEmails {
             folder.fetch(read_messages, fp);
 
             // Creating an array of Emails to store each email
-            Email[] emails = new Email[folder.getMessageCount()];
+            emails = new Email[folder.getMessageCount()];
 
+            // Add emails to emails array
             try {
 
                 System.out.println("Writing read messages...");
@@ -70,6 +72,9 @@ public class StoreEmails {
                     folder.fetch(unread_messages, fp);
                     printFolder(unread_messages, emails, mailbox);
                 }
+
+                // Marking all emails as read for next loading
+
 
                 //folder.close(true);
                 //store.close();
@@ -84,7 +89,10 @@ public class StoreEmails {
             e.printStackTrace();
             System.exit(1);
         }
+
+
     }
+
 
     private static int count;
     // Outputs all emails from desired gmail folder

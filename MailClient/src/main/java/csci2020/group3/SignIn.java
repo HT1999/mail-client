@@ -161,13 +161,19 @@ public class SignIn {
             }
         });
 
+        // Add checkbox for remember me "Keep me signed in" to save/not save information
+        CheckBox remember = new CheckBox("Keep me signed in");
+        remember.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
+
         GridPane.setConstraints(login_btn, 1, 4);
+        GridPane.setConstraints(remember, 1, 5);
         GridPane.setHalignment(login_btn, HPos.CENTER);
-        pane.getChildren().add(login_btn);
+
+        pane.getChildren().addAll(login_btn, remember);
 
         // Creating Scene and showing stage
         login_menu.setTitle("Sign In");
-        Scene sendEmailScene = new Scene(pane,270 , 180);
+        Scene sendEmailScene = new Scene(pane,300 , 180);
         login_menu.setScene(sendEmailScene);
         login_menu.show();
 

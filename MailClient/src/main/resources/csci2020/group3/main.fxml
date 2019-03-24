@@ -17,6 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
+<?import javafx.scene.control.ProgressBar?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="csci2020.group3.Controller">
     <top>
         <VBox style="-fx-background-color: #616161;" BorderPane.alignment="CENTER">
@@ -82,7 +83,7 @@
                             <font>
                                 <Font name="Calibri" size="12.0" />
                             </font></Button>
-                        <Button fx:id="deleteBtn" mnemonicParsing="false" styleClass="delete-button" stylesheets="@style.css" text="Delete" textFill="#212121">
+                        <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteButtonClicked" styleClass="delete-button" stylesheets="@style.css" text="Delete" textFill="#212121">
                             <font>
                                 <Font name="Calibri" size="12.0" />
                             </font></Button>
@@ -106,6 +107,7 @@
                         <Button id="starredBtn" fx:id="starredBtn" maxHeight="60.0" mnemonicParsing="false" onAction="#loadListViewDataStarred" prefHeight="60.0" prefWidth="178.0" styleClass="starred-button" stylesheets="@style.css" text="Starred" />
                         <Button id="spamBtn" fx:id="spamBtn" maxHeight="60.0" mnemonicParsing="false" onAction="#loadListViewDataSpam" prefHeight="60.0" prefWidth="178.0" styleClass="spam-button" stylesheets="@style.css" text="Spam" />
                         <Button id="trashBtn" fx:id="trashBtn" maxHeight="60.0" mnemonicParsing="false" onAction="#loadListViewDataTrash" prefHeight="60.0" prefWidth="178.0" styleClass="trash-button" stylesheets="@style.css" text="Trash" />
+                        <ProgressBar id="loading" fx:id="loading" maxHeight="30.0" prefHeight="60.0" prefWidth="178.0" styleClass="progress-bar" stylesheets="@style.css" />
                     </children>
                     <HBox.margin>
                         <Insets />

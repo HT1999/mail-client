@@ -20,6 +20,8 @@ import java.io.IOException;
 
 public class LoadEmailListView {
 
+    //ListView emailList;
+
     // Opens specified mailbox data and displays in the ListView
     public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox, TextField searchField) throws Exception{
 
@@ -105,6 +107,7 @@ public class LoadEmailListView {
                 if (emailList.getSelectionModel().getSelectedItem() == null) {
                     wb.getEngine().loadContent("");
                 }
+                // If no empty space (listview) is pressed, load html
                 else if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
                     testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
                     try {

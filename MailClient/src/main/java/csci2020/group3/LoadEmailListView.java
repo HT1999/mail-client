@@ -105,11 +105,13 @@ public class LoadEmailListView {
                 if (emailList.getSelectionModel().getSelectedItem() == null) {
                     wb.getEngine().loadContent("");
                 }
+                // If no empty space (listview) is pressed, load html
                 else if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
                     testFile = new File(emailList.getSelectionModel().getSelectedItem().getPath());
                     try {
                         // set WebView to emails content path
                         String str =  FileUtils.readFileToString(testFile, "UTF-8");
+                        System.out.println("file path: " + testFile);
                         wb.getEngine().loadContent(str);
                     } catch (IOException e1) {
                         e1.printStackTrace();

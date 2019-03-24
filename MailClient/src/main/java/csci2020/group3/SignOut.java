@@ -2,8 +2,10 @@ package csci2020.group3;
 
 
 import javafx.scene.control.Alert;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 public class SignOut {
 
@@ -21,12 +23,15 @@ public class SignOut {
 
             // Clearing the data files
             file = new File("src/data/INBOX");
+            Thread.sleep(100);
             deleteDir(file);
             file = new File("src/data/[Gmail]");
+            Thread.sleep(100);
             deleteDir(file);
 
         } catch(Exception e) {
             // Sign out error exception
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Error signing out, try again.");
             alert.showAndWait();
@@ -35,7 +40,7 @@ public class SignOut {
     }
 
     // Deletes inputted director
-    private static void deleteDir(File dir) {
+    private static void deleteDir(File dir) throws IOException {
 
         File[] folder = dir.listFiles();
 
@@ -44,10 +49,14 @@ public class SignOut {
                 // Deletes file or directory depending
                 if(f.isDirectory()) {
                     System.out.println("deleting directory...");
-                    deleteDir(f);
 
+                    deleteDir(f);
                 } else {
-                    f.delete();
+                    try {
+                        FileUtils.forceDelete(f);
+                    } catch (IOException e) {
+                        //e.printStackTrace();
+                    }
                 }
             }
         }

@@ -7,12 +7,16 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+
+import static csci2020.group3.Preferences.CONFIG_FILE;
 
 
 public class Controller implements Initializable{
@@ -131,6 +135,20 @@ public class Controller implements Initializable{
         Button[] buttons = {newEmailBtn, loadBtn, replyBtn, fwdBtn, deleteBtn, inboxBtn,
                 sentBtn, starredBtn, spamBtn, trashBtn};
         ButtonState bs = new ButtonState();
+
+        File configFile = new File(CONFIG_FILE);
+        File inboxFolder = new File("src/data/INBOX");
+        File gmailFolder = new File("src/data/[Gmail]");
+
+        // If config.txt doesnt exist but mailbox folders do for whatever reason (deletion failure), empty local folders
+        if ((!configFile.exists()) && (inboxFolder.exists() || gmailFolder.exists())) {
+            try {
+                FileUtils.deleteDirectory(inboxFolder);
+                FileUtils.deleteDirectory(gmailFolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         try {
             bs.setMenuBarItems(signinMenu, signoutMenu);

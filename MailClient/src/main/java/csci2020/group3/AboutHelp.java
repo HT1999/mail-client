@@ -38,10 +38,10 @@ public class AboutHelp {
 
         // Apply dark scheme to text
         aboutInfo.setStyle("-fx-text-fill: #FFFFFF");
-        created.setStyle("-fx-text-fill: #9E9E9E");
-        spencer.setStyle("-fx-text-fill: #9E9E9E");
-        hassan.setStyle("-fx-text-fill: #9E9E9E");
-        sailesh.setStyle("-fx-text-fill: #9E9E9E");
+        created.setStyle("-fx-text-fill: #FFFFFF");
+        spencer.setStyle("-fx-text-fill: #FFFFFF");
+        hassan.setStyle("-fx-text-fill: #FFFFFF");
+        sailesh.setStyle("-fx-text-fill: #FFFFFF");
 
 
         // Change title font

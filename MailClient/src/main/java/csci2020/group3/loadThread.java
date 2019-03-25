@@ -7,6 +7,7 @@ import javafx.scene.web.WebView;
 
 public class loadThread implements Runnable {
 
+    // initialize all relevant user and system information
     private String email_addr;
     private String pwd;
     private ListView<EmailListView.EmailList> emailList;
@@ -40,7 +41,7 @@ public class loadThread implements Runnable {
         long timeElapsed = (endTime - startTime)/1000000000;
         System.out.println("Time taken to load files: " + timeElapsed + "s");
 
-        // loading complete
+        // loading bar complete
         loading.setProgress(1.0f);
 
         try {

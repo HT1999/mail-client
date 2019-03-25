@@ -145,7 +145,7 @@ public class DeleteEmail {
             e.printStackTrace();
         }
 
-        // Delete emails html conent file
+        // Delete emails html content file
         File htmlFile = new File("src/data/" + mailbox + "/email-" + index + ".html");
         FileUtils.forceDelete(htmlFile);
 

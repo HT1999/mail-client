@@ -9,13 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -92,13 +92,13 @@ public class CreateNewEmail {
         // Message
         Label msg_lbl = new Label("Message");
         msg_lbl.setStyle("-fx-text-fill: #FFFFFF");
-        final TextArea msg = new TextArea();
+        final HTMLEditor msg = new HTMLEditor();
         msg.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
-        msg.setPromptText("Message");
-        msg.getText();
+//      msg.setPromptText("Message");
+        msg.getHtmlText();
 
         if (msg != null) {
-            msg.setText(content);
+            msg.setHtmlText(content);
         }
         GridPane.setConstraints(msg_lbl, 0, 3);
         GridPane.setConstraints(msg, 1, 3);
@@ -210,7 +210,7 @@ public class CreateNewEmail {
         send_btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SendEmail.sendMail(from.getText(), to.getText(), preferences.getPassword(), subject.getText(), msg.getText());
+                SendEmail.sendMail(from.getText(), to.getText(), preferences.getPassword(), subject.getText(), msg.getHtmlText());
                 new_email.close();
             }
         });
@@ -222,7 +222,7 @@ public class CreateNewEmail {
 
         // Creating Scene and showing stage
         new_email.setTitle("New Message");
-        Scene sendEmailScene = new Scene(pane,650 , 400);
+        Scene sendEmailScene = new Scene(pane,1000 , 400);
         new_email.setScene(sendEmailScene);
         new_email.show();
 

@@ -139,10 +139,10 @@ public class DeleteEmail {
         }
         catch (Exception e) {
             // Seems to be deleting fine regardless of error
-            //Alert error = new Alert(Alert.AlertType.ERROR);
-            //error.setContentText("Issue deleting file.");
-            //error.showAndWait();
-            e.printStackTrace();
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText("Issue deleting file.");
+            error.showAndWait();
+            //e.printStackTrace();
         }
 
         // Delete emails html content file

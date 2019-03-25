@@ -34,23 +34,11 @@ public class SignIn {
     // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)
     public void signInButtonClicked() throws Exception{
 
-        // Might use ******
-        // FXML Setup
-//        final Stage login_menu = new Stage();
-//        login_menu.initModality(Modality.APPLICATION_MODAL);
-//
-//        Parent login_disp = FXMLLoader.load(getClass().getResource("signin.fxml"));
-//
-//        Scene sendEmailScene = new Scene(login_disp,600 , 400);
-//        login_menu.setScene(sendEmailScene);
-//        login_menu.show();
-
         System.out.println("User attempting to login");
 
         // Create new send email window
         final Stage login_menu = new Stage();
         login_menu.initModality(Modality.APPLICATION_MODAL);
-        //dialog.initOwner(primaryStage);
 
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(30, 10, 10, 25));
@@ -160,15 +148,10 @@ public class SignIn {
             }
         });
 
-        // Add checkbox for remember me "Keep me signed in" to save/not save information
-        CheckBox remember = new CheckBox("Keep me signed in");
-        remember.setStyle("-fx-control-inner-background:#757575;" + "-fx-text-fill: #FFFFFF");
-
         GridPane.setConstraints(login_btn, 1, 4);
-        GridPane.setConstraints(remember, 1, 5);
         GridPane.setHalignment(login_btn, HPos.CENTER);
 
-        pane.getChildren().addAll(login_btn, remember);
+        pane.getChildren().addAll(login_btn);
 
         // Creating Scene and showing stage
         login_menu.setTitle("Sign In");

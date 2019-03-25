@@ -1,9 +1,7 @@
 package csci2020.group3;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -218,6 +216,5 @@ public class Controller implements Initializable{
         mailboxCurrent = "[Gmail]/Trash";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Trash", searchField);
     }
-
 
 }

@@ -5,13 +5,9 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import javax.mail.*;
 import javax.mail.Flags.Flag;
-import javax.mail.internet.MimeMessage;
-import javax.mail.search.AndTerm;
 import javax.mail.search.FlagTerm;
-import javax.mail.search.MessageNumberTerm;
 
 public class StoreEmails {
     private static Folder folder;

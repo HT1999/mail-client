@@ -69,8 +69,6 @@ public class EmailListView {
             content.setStyle("fx-border-style: solid inside;" +
                                 "-fx-border-radius: 2;" +
                                 "-fx-border-color: #424242;");
-            //content = new HBox(vBox);
-            //content.setSpacing(2);
         }
 
         @Override

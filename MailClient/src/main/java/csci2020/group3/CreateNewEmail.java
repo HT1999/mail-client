@@ -215,6 +215,7 @@ public class CreateNewEmail {
             }
         });
 
+        // Set final features to pane
         GridPane.setConstraints(send_btn, 1, 5);
         GridPane.setHalignment(send_btn, HPos.RIGHT);
         pane.getChildren().add(send_btn);

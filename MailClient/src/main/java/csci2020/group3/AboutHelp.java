@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 public class AboutHelp {
     public void aboutButtonClicked() throws Exception{
         System.out.println("User clicked Help>About button");
+
         // Create new popup window
         final Stage about_window = new Stage();
         about_window.initModality(Modality.APPLICATION_MODAL);
@@ -24,12 +25,24 @@ public class AboutHelp {
         pane.setHgap(10);
         pane.setVgap(10);
 
+        // Apply dark scheme to about window
+        pane.setStyle("-fx-background-color: #424242");
+
+
         // Add text to be shown in window
         final Text aboutInfo = new Text("Email Client 2019");
         final Text created = new Text("Created by: ");
         final Text spencer = new Text("\tSpencer Gray");
         final Text hassan = new Text("\tHassan Tariq");
         final Text sailesh = new Text("\tSailesh Sharma");
+
+        // Apply dark scheme to text
+        aboutInfo.setStyle("-fx-text-fill: #FFFFFF");
+        created.setStyle("-fx-text-fill: #9E9E9E");
+        spencer.setStyle("-fx-text-fill: #9E9E9E");
+        hassan.setStyle("-fx-text-fill: #9E9E9E");
+        sailesh.setStyle("-fx-text-fill: #9E9E9E");
+
 
         // Change title font
         aboutInfo.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));

@@ -99,13 +99,13 @@ public class LoadEmailListView {
                 System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
 
                 // Clean WebView contents
-                wb.getEngine().loadContent("");
+                wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
 
                 File testFile;
 
                 // If an empty space is pressed inside the ListView
                 if (emailList.getSelectionModel().getSelectedItem() == null) {
-                    wb.getEngine().loadContent("");
+                    wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
                 }
                 // If no empty space (listview) is pressed, load html
                 else if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {

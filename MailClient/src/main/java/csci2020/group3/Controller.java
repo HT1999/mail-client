@@ -157,6 +157,9 @@ public class Controller implements Initializable{
         // Initialize progress bar at 0
         loading.setProgress(0f);
 
+        // Initialize WebView
+        wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
+
         // If config.txt doesnt exist but mailbox folders do for whatever reason (deletion failure), empty local folders
         if ((!configFile.exists()) && (inboxFolder.exists() || gmailFolder.exists())) {
             try {

@@ -2,6 +2,7 @@ package csci2020.group3;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -11,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
+// Class Displays an about page
 public class AboutHelp {
     public void aboutButtonClicked() throws Exception{
         System.out.println("User clicked Help>About button");
@@ -18,7 +20,6 @@ public class AboutHelp {
         // Create new popup window
         final Stage about_window = new Stage();
         about_window.initModality(Modality.APPLICATION_MODAL);
-
 
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10, 10, 10, 10));
@@ -28,13 +29,12 @@ public class AboutHelp {
         // Apply dark scheme to about window
         pane.setStyle("-fx-background-color: #424242");
 
-
         // Add text to be shown in window
-        final Text aboutInfo = new Text("Email Client 2019");
-        final Text created = new Text("Created by: ");
-        final Text spencer = new Text("\tSpencer Gray");
-        final Text hassan = new Text("\tHassan Tariq");
-        final Text sailesh = new Text("\tSailesh Sharma");
+        final Label aboutInfo = new Label("Mail Client");
+        final Label created = new Label("Created by: ");
+        final Label spencer = new Label("\tSpencer Gray");
+        final Label hassan = new Label("\tHassan Tariq");
+        final Label sailesh = new Label("\tSailesh Sharma");
 
         // Apply dark scheme to text
         aboutInfo.setStyle("-fx-text-fill: #FFFFFF");
@@ -42,7 +42,6 @@ public class AboutHelp {
         spencer.setStyle("-fx-text-fill: #FFFFFF");
         hassan.setStyle("-fx-text-fill: #FFFFFF");
         sailesh.setStyle("-fx-text-fill: #FFFFFF");
-
 
         // Change title font
         aboutInfo.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));

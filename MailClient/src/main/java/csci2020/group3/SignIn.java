@@ -34,8 +34,6 @@ public class SignIn {
     // Creates the signInButtonClicked window on button click and handles sign in (** should clean up **)
     public void signInButtonClicked() throws Exception{
 
-        System.out.println("User attempting to login");
-
         // Create new send email window
         final Stage login_menu = new Stage();
         login_menu.initModality(Modality.APPLICATION_MODAL);
@@ -118,8 +116,6 @@ public class SignIn {
                     Preferences preferences = new Preferences(email.getText(), pwd.getText());
                     preferences.initConfig();
 
-                    System.out.println("Successful user sign in!");
-
                     // Successful login popup
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful Sign-In", ButtonType.OK);
                     alert.showAndWait();
@@ -141,7 +137,6 @@ public class SignIn {
                     // Invalid login attempt
                 } catch (MessagingException e) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Invalid email/password entered.");
-                    System.out.println("Invalid user login attempt!");
                     errorAlert.showAndWait();
                     //e.printStackTrace();
                 }

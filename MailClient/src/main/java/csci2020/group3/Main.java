@@ -18,7 +18,7 @@ public class Main extends Application {
         root.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         primaryStage.setTitle("Mail Client");
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root, 900, 550));
         primaryStage.show();
     }
 

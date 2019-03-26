@@ -92,7 +92,6 @@ public class LoadEmailListView {
 
             // Opening ListView items HTML contents in the WebView
             emailList.setOnMouseClicked(e -> {
-                System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
 
                 // Clean WebView contents
                 wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");

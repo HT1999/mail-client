@@ -31,7 +31,6 @@ public class CreateNewEmail {
 
     // onclick method to generate new email window
     public void newButtonClicked(String receiver, String subj, String content) {
-        System.out.println("User pressed new button...");
 
         // Create new send email window
         final Stage new_email = new Stage();

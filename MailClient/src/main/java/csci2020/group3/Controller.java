@@ -73,7 +73,7 @@ public class Controller implements Initializable{
         Preferences preferences = Preferences.getPreferences();
 
         // Creates a new thread to handle reading/storing of emails.
-        Thread thread = new Thread(new loadThread(preferences.getEmail(), preferences.getPassword(), emailList, wb, searchField, loading));
+        Thread thread = new Thread(new LoadThread(preferences.getEmail(), preferences.getPassword(), emailList, wb, searchField, loading));
         thread.start();
 
     }

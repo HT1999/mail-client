@@ -35,7 +35,6 @@ public class DeleteEmail {
     }
 
     public void deleteButtonClicked() throws Exception {
-        System.out.println("User clicked delete button");
 
         // Open mailserver to delete from
         Properties props = System.getProperties();
@@ -76,8 +75,6 @@ public class DeleteEmail {
                 // Setting flag on message for deletion
                 read_messages[i].setFlag(Flags.Flag.DELETED, true);
 
-                System.out.println("Deleting message: " + read_messages[i].getSubject());
-
                 // Copying deleted message to trash mailbox (Automatically removes from current folder)
                 folder.copyMessages(new Message[] { read_messages[i] }, trashFolder);
                 break;
@@ -97,8 +94,6 @@ public class DeleteEmail {
 
                     // Setting flag on message for deletion
                     unread_messages[i].setFlag(Flags.Flag.DELETED, true);
-
-                    System.out.println("Deleting message: " + unread_messages[i].getSubject());
 
                     // Copying deleted message to trash mailbox (Automatically removes from current folder)
                     folder.copyMessages(new Message[] { unread_messages[i] }, trashFolder);

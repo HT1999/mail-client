@@ -71,13 +71,9 @@ public class SendEmail {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Email Sent", ButtonType.OK);
             alert.showAndWait();
 
-
-            // Success console log
-            System.out.println("Mail sent successfully");
         } catch (MessagingException mex) {
             // Failure to send and why
             Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Failure sending email: " + mex);
-            System.out.println("Exception sending email: " + mex);
             errorAlert.showAndWait();
         }
     }

@@ -1,14 +1,9 @@
 package csci2020.group3;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -95,7 +90,6 @@ public class EmailListView {
         @Override
         public void updateSelected(boolean selected) {
             super.updateSelected(selected);
-            //String style =
             content.setStyle(selected ? "-fx-background-color: #757575;" : "-fx-background-color: #212121;"
                                 + "-fx-border-color: #424242");
         }

@@ -1,7 +1,6 @@
 package csci2020.group3;
 
 import com.google.gson.Gson;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.*;
 
@@ -28,9 +27,6 @@ public class Preferences {
     }
 
     public void setPassword(String password) {
-        // Currently being stored in plaintext
-        // Had trouble working with a hashed password
-        //this.password = DigestUtils.shaHex(password);
         this.password = password;
     }
 
@@ -72,8 +68,6 @@ public class Preferences {
 
         } catch (FileNotFoundException e) {
             // Creates config file if not found
-            //initConfig();
-            System.out.println("here is the problem");
             e.printStackTrace();
         } catch (IOException e) {
             //System.out.println("No config.txt");

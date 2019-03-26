@@ -1,7 +1,5 @@
 package csci2020.group3;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +22,7 @@ import java.awt.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
+// Class that handles composing a new email
 public class CreateNewEmail {
 
     Preferences preferences = Preferences.getPreferences();
@@ -37,7 +36,6 @@ public class CreateNewEmail {
         // Create new send email window
         final Stage new_email = new Stage();
         new_email.initModality(Modality.APPLICATION_MODAL);
-        //dialog.initOwner(primaryStage);
 
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(30, 10, 10, 20));
@@ -46,7 +44,7 @@ public class CreateNewEmail {
 
         pane.setStyle("-fx-background-color: #424242");
 
-        // From email ** Temporary, should be autofilled by current users email
+        // From email
         Label from_lbl = new Label("From");
         from_lbl.setStyle("-fx-text-fill: #FFFFFF");
         final TextField from = new TextField(preferences.getEmail());
@@ -123,7 +121,6 @@ public class CreateNewEmail {
         attach_btn.setOnMouseExited(e -> attach_btn.setStyle("-fx-background-color: #757575;"  +
                                                                 "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
 
-        //csci2020/group3/style.css
         attach_btn.setGraphic(new ImageView("csci2020/group3/link.png"));
 
         attach_btn.setOnAction(e -> {
@@ -140,21 +137,18 @@ public class CreateNewEmail {
             }
             else {
                 try {
-                    EventQueue.invokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Uses JFileChooser interface for user to select the attachment file.
-                            JFileChooser finder = new JFileChooser();
-                            finder.showOpenDialog(null);
-                            File f = finder.getSelectedFile();
+                    EventQueue.invokeAndWait(() -> {
+                        // Uses JFileChooser interface for user to select the attachment file.
+                        JFileChooser finder = new JFileChooser();
+                        finder.showOpenDialog(null);
+                        File f = finder.getSelectedFile();
 
-                            // Outputs file names to textfield
-                            attach_path = f.getAbsolutePath();
-                            attach_field.setText(f.getName());
-                        }
+                        // Outputs file names to textfield
+                        attach_path = f.getAbsolutePath();
+                        attach_field.setText(f.getName());
                     });
                 } catch (InterruptedException e1) {
-                    // User closes email attachment window.
+                    // User closes email attachment window - no need for a stackTrace
                     //e1.printStackTrace();
                 } catch (InvocationTargetException e1) {
                     // Redundant exception, needed for invokeAndWait.
@@ -196,7 +190,6 @@ public class CreateNewEmail {
         Button send_btn = new Button("Send");
         send_btn.setTextFill(Paint.valueOf("#FFFFFF"));
 
-
         // Styling the default send button
         send_btn.setStyle("-fx-background-color: #757575;" +
                 "-fx-border-color: #9E9E9E;\n" + "-fx-border-radius: 1;");
@@ -207,12 +200,9 @@ public class CreateNewEmail {
         send_btn.setOnMouseExited(e -> send_btn.setStyle("-fx-background-color: #757575;"  +
                 "-fx-border-color: #9E9E9E;" + "-fx-border-radius: 1;"));
 
-        send_btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                SendEmail.sendMail(from.getText(), to.getText(), preferences.getPassword(), subject.getText(), msg.getText());
-                new_email.close();
-            }
+        send_btn.setOnAction(event -> {
+            SendEmail.sendMail(from.getText(), to.getText(), preferences.getPassword(), subject.getText(), msg.getText());
+            new_email.close();
         });
 
         // Set final features to pane

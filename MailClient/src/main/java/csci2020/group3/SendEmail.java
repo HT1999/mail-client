@@ -12,7 +12,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMultipart;
-//import javax.swing.*;
 
 import static csci2020.group3.CreateNewEmail.attach_field;
 import static csci2020.group3.CreateNewEmail.attach_path;
@@ -72,8 +71,6 @@ public class SendEmail {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Email Sent", ButtonType.OK);
             alert.showAndWait();
 
-            // updating attach_field after email sent
-            //attach_field.setText("");
 
             // Success console log
             System.out.println("Mail sent successfully");

@@ -17,7 +17,6 @@ public class StoreEmails {
     public static void storeEmails(String email_addr, String pwd, String mailbox) {
 
         Properties props = System.getProperties();
-        //props.setProperty("mail.store.protocol", "imaps");
         props.put("mail.imap.fetchsize", "100000");
         props.setProperty("mail.imap.partialfetch", "false");
         props.setProperty("mail.imaps.partialfetch", "false");
@@ -30,16 +29,11 @@ public class StoreEmails {
 
             // Loads specified folder and prints total number of emails inside
             folder = store.getFolder(mailbox);
-            System.out.println("Total # of emails: " + folder.getMessageCount());
-
-            System.out.println("Total # of unread emails: " + folder.getUnreadMessageCount());
 
             // Opening store folder
             if (!folder.isOpen()) {
                 folder.open(Folder.READ_ONLY);
             }
-            //folder.open(Folder.READ_ONLY);
-            //folder.open(Folder.)
 
             // Reads read messages
             Message read_messages[] = folder.search(new FlagTerm(new Flags(Flag.SEEN), true));
@@ -59,23 +53,16 @@ public class StoreEmails {
             // Add emails to emails array
             try {
 
-                System.out.println("Writing read messages...");
                 printFolder(read_messages, emails, mailbox);
 
                 // If unread messages exist, it reads them and places them in their respective email position
                 if (unread_messages.length != 0) {
-                    System.out.println("Writing unread messages...");
                     folder.fetch(unread_messages, fp);
                     printFolder(unread_messages, emails, mailbox);
                 }
 
-                // Marking all emails as read for next loading
 
-
-                //folder.close(true);
-                //store.close();
             } catch (Exception ex) {
-                System.out.println("Reading mail exception");
                 ex.printStackTrace();
             }
         } catch (NoSuchProviderException e) {
@@ -100,9 +87,6 @@ public class StoreEmails {
             // Creating Email Class to store key components
             Email email = new Email();
 
-            System.out.println("Reading Email #" + (i + 1) + ".....");
-            //writeFile.write("Email #" + (i + 1) + ":");
-            //email.setId(i+1);
             email.setId(msgs[i].getMessageNumber());
 
             printEmail(msgs[i], email, mailbox);
@@ -112,7 +96,6 @@ public class StoreEmails {
 
             count--;
         }
-        //writeFile.close();
 
         // Creating json data file with all emails
         File jsonFile = new File("src/data/" + mailbox + "/emails.json");
@@ -127,22 +110,12 @@ public class StoreEmails {
     public static void printEmail(Message message, Email email, String mailbox) throws Exception {
         Address[] a;
 
-
         // Getting email sender
         if ((a = message.getFrom()) != null) {
             for (int j = 0; j < a.length; j++) {
                 email.setFrom(a[j].toString());
             }
         }
-
-        // Getting email recipient - might need
-        /*
-        if ((a = message.getRecipients(Message.RecipientType.TO)) != null) {
-            for (int j = 0; j < a.length; j++) {
-
-            }
-        }
-        */
 
         email.setSubject(message.getSubject());
         email.setDate(message.getReceivedDate());
@@ -157,8 +130,6 @@ public class StoreEmails {
             if (msg.isMimeType("multipart/*")) {
                 Multipart mp = (Multipart) msg.getContent();
                 for (int i = 0; i < mp.getCount(); i++) {
-
-                    //System.out.println(mp.getBodyPart(i).getContentType());
 
                     if (mp.getBodyPart(i).isMimeType("text/*")) {
                         writeEmail(mp.getBodyPart(i), email, mailbox);
@@ -189,7 +160,7 @@ public class StoreEmails {
 
             // getContent Exception
         } catch (Exception ex) {
-            System.out.println("getContent exception");
+            System.out.println("Issue getting emails content.");
             ex.printStackTrace();
         }
     }

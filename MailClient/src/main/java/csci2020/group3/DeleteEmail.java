@@ -20,11 +20,11 @@ import java.util.*;
 public class DeleteEmail {
 
     private static Folder folder;
-    ListView<EmailListView.EmailList> emailList;
-    int index;
-    String mailbox;
-    WebView wb;
-    TextField searchField;
+    private ListView<EmailListView.EmailList> emailList;
+    private int index;
+    private String mailbox;
+    private WebView wb;
+    private TextField searchField;
 
     DeleteEmail(ListView emailList, int index, String mailbox, WebView wb, TextField searchField) {
         this.emailList = emailList;
@@ -39,7 +39,6 @@ public class DeleteEmail {
 
         // Open mailserver to delete from
         Properties props = System.getProperties();
-        //props.setProperty("mail.store.protocol", "imaps");
         props.put("mail.imap.fetchsize", "100000");
         props.setProperty("mail.imap.partialfetch", "false");
         props.setProperty("mail.imaps.partialfetch", "false");
@@ -171,7 +170,5 @@ public class DeleteEmail {
 
         return result.toArray(input);
     }
-
-
 
 }

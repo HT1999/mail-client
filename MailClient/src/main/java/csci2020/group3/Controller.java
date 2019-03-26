@@ -68,8 +68,6 @@ public class Controller implements Initializable{
 
     // Reads emails
     public void loadButtonClicked() {
-        // Update loading bar when clicked
-        //loading.setProgress(-1.0f);
 
         // Grabbing users settings information
         Preferences preferences = Preferences.getPreferences();

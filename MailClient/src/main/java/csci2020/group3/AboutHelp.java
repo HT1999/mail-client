@@ -4,10 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -15,7 +13,6 @@ import javafx.scene.text.FontWeight;
 // Class Displays an about page
 public class AboutHelp {
     public void aboutButtonClicked() throws Exception{
-        System.out.println("User clicked Help>About button");
 
         // Create new popup window
         final Stage about_window = new Stage();

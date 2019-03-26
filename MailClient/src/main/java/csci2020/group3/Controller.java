@@ -1,9 +1,7 @@
 package csci2020.group3;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -70,8 +68,6 @@ public class Controller implements Initializable{
 
     // Reads emails
     public void loadButtonClicked() {
-        // Update loading bar when clicked
-        //loading.setProgress(-1.0f);
 
         // Grabbing users settings information
         Preferences preferences = Preferences.getPreferences();
@@ -159,6 +155,9 @@ public class Controller implements Initializable{
         // Initialize progress bar at 0
         loading.setProgress(0f);
 
+        // Initialize WebView
+        wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
+
         // If config.txt doesnt exist but mailbox folders do for whatever reason (deletion failure), empty local folders
         if ((!configFile.exists()) && (inboxFolder.exists() || gmailFolder.exists())) {
             try {
@@ -218,6 +217,5 @@ public class Controller implements Initializable{
         mailboxCurrent = "[Gmail]/Trash";
         LoadEmailListView.loadData(emailList, wb, "[Gmail]/Trash", searchField);
     }
-
 
 }

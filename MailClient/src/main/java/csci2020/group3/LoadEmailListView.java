@@ -20,8 +20,6 @@ import java.io.IOException;
 
 public class LoadEmailListView {
 
-    //ListView emailList;
-
     // Opens specified mailbox data and displays in the ListView
     public static void loadData(ListView<EmailListView.EmailList> emailList, WebView wb, String mailbox, TextField searchField) throws Exception{
 
@@ -50,7 +48,6 @@ public class LoadEmailListView {
             FilteredList<EmailListView.EmailList> filteredData = new FilteredList<>(data.filtered(in -> true));
 
             // Adding listener to searchField, handles the listview filtering
-
             searchField.textProperty().addListener(((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(email -> {
                     if (newValue == null || newValue.isEmpty()) {
@@ -84,7 +81,6 @@ public class LoadEmailListView {
 
             // Placing items inside the email ListView
             emailList.setItems(sortedData);
-            //emailList.setItems(data);
 
             // Needed to implement custom email cell design
             emailList.setCellFactory(new Callback<ListView<EmailListView.EmailList>, ListCell<EmailListView.EmailList>>() {
@@ -99,13 +95,13 @@ public class LoadEmailListView {
                 System.out.println("clicked on: " + emailList.getSelectionModel().getSelectedItems());
 
                 // Clean WebView contents
-                wb.getEngine().loadContent("");
+                wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
 
                 File testFile;
 
                 // If an empty space is pressed inside the ListView
                 if (emailList.getSelectionModel().getSelectedItem() == null) {
-                    wb.getEngine().loadContent("");
+                    wb.getEngine().loadContent("<!DOCTYPE html><html><body bgcolor=\"#212121\"></body></html>");
                 }
                 // If no empty space (listview) is pressed, load html
                 else if (emailList.getSelectionModel().getSelectedItem().getPath() != null) {
@@ -126,8 +122,7 @@ public class LoadEmailListView {
             emailList.refresh();
         }
         catch(Exception e) {
-            // emails.json file not created...
-            System.out.println("Initial JSON file not created.\nData needs to be loaded in!");
+            // emails.json file not created... not an issue
             //e.printStackTrace();
         }
 

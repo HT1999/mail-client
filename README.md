@@ -3,11 +3,11 @@
 https://github.com/spencer-gray/MailClient
 ### CSCI2020 - Group 3
 
-- **Spencer Gray**
+- **Spencer Gray - spencer-gray**
 	- Project planning, user login/logout and authentication, implemented email reading/storage, sending/forwarding/replying/deleting emails, overall application design, user interface, gradle integration.
-- **Hassan Tariq**
+- **Hassan Tariq - HT1999**
 	- Project planning, software testing, code review, quality assurance, set up delete class framework, email loading indicator, added an about page.
-- **Sailesh Sharma**
+- **Sailesh Sharma - sailesh10**
 	- Software testing.
 
 ### Instructions:
